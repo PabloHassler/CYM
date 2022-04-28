@@ -11,12 +11,12 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #include "lcd.h"
-#define DIA=4;
-#define MES=7;
-#define ANO=10;
-#define HORA=4;
-#define MINUTO=7;
-#define SEGUNDO=10;
+#define DIA 4
+#define MES 7
+#define ANO 10
+#define HORA 4
+#define MINUTO 7
+#define SEGUNDO 10
 
 uint8_t KEYPAD_scan (uint8_t *);
 uint8_t KEYPAD_Update (uint8_t *);
@@ -222,7 +222,7 @@ void actualizar_MEF(){
 	}
 }
 
-void ActualizarTiempo(){
+void actualizarTiempo(){
 	LCDGotoXY(4,0);
 	LCDescribeDato(t.date,2);
 	LCDsendChar('/');
@@ -253,7 +253,7 @@ void imprimir(){
 }
 
 void salida(uint8_t z,uint8_t pos,uint8_t campo){
-	if(z=1){
+	if(z==1){
 		t=t_Parcial;
 		LCDGotoXY(campo,pos);
 		FlagCursor=1;
