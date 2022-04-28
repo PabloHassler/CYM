@@ -31,7 +31,7 @@ void actualizarCampo(char,uint8_t);
 void imprimir();
 
 typedef enum{S0,S1,S2,S3,S4,S5,S6} state;
-state estado;state estadoAuxiliar;
+state estado;
 
 typedef struct{
 	unsigned char second;
@@ -45,34 +45,25 @@ typedef struct{
 volatile time t={10,29,14,19,4,21};
 volatile time t_Parcial={10,29,14,19,4,21};
 volatile uint8_t FlagCursor=0;
+volatile uint8_t actualizar=1;
 const uint8_t filas[4] =   {0b00010000,0b00001000,0b00000001,0b10000000};
 const uint8_t columna[4] = {0b00001000,0b00100000,0b00010000,0b00000100};
 const char codChar[4][4] = {{'1','2','3','A'},
-{'4','5','6','B'},
-{'7','8','9','C'},
-{'0','*','#','D'}};
+							{'4','5','6','B'},
+							{'7','8','9','C'},
+							{'0','*','#','D'}};
 
 int main(void)
 {
     /* Replace with your application code */
 	setupTimer();
-	setupLCD();
-	
+	LCDinit();
+	LCDclr();
 	iniciar_MEF();
 	while (1) 
     {
 		actualizar_MEF();	
     }
-}
-
-/*SETUP DE LA PANTALLA LCD*/
-void setupLCD(){
-	LCDinit();
-	LCDclr();
-	LCDGotoXY(0,0);
-	LCDstring((uint8_t*)"31/12/21",8);	
-	LCDGotoXY(0,1);
-	LCDstring((uint8_t*)"23:59:59",8);
 }
 
 void setupTimer(){
@@ -162,79 +153,105 @@ static char not_leap(void)      //check for leap year
 }
 
 void iniciar_MEF(){
-	estado=S0;
-	
+	estado=S0;t_Parcial=t;
 }
 
 void actualizar_MEF(){
-	uint8_t key=0x00;
+	uint8_t key='#';
 	static uint8_t nuevo=0;
-	nuevo=KEYPAD_Update (&key);
+	nuevo=KEYPAD_scan (&key);
 	switch (estado){
 		case S0:
 			switch (key){
-				case 'A': estado=S1; salida(1,0,ANO);
+				case 'A': actualizar=0; t_Parcial=t; estado=S1; salida(1,0,ANO); 
+				break;
 				case 'D': estado=S0; salida(0,0,ANO);
+				break;
 				default: actualizarTiempo();
-			}
+			} 
+		break;
 		case S1:
 			switch (key){
-				case 'A': estado=S2; salida(1,0,MES);
-				case 'D': estado=S0; salida(0,0,MES);
-				case 'B': actualizarCampo('A',1); imprimir();
-				case 'C': actualizarCampo('A',0); imprimir();
-			}
+				case 'A': estado=S2; salida(1,0,MES); 
+				break;
+				case 'D': estado=S0; salida(0,0,MES); 
+				break;
+				case 'B': actualizarCampo('A',1); imprimir(); 
+				break;
+				case 'C': actualizarCampo('A',0); imprimir(); 
+			} 
+		break;
 		case S2:
 			switch (key){
-				case 'A': estado=S3; salida(1,0,DIA);
-				case 'D': estado=S0; salida(0,0,DIA);
-				case 'B': actualizarCampo('M',1); imprimir();
-				case 'C': actualizarCampo('M',0); imprimir();
-		}
+				case 'A': estado=S3; salida(1,0,DIA); 
+				break;
+				case 'D': estado=S0; salida(0,0,DIA); 
+				break;
+				case 'B': actualizarCampo('M',1); imprimir(); 
+				break;
+				case 'C': actualizarCampo('M',0); imprimir(); 
+			} 
+		break;
 		case S3:
 			switch (key){
-				case 'A': estado=S4; salida(1,0,HORA);
-				case 'D': estado=S0; salida(0,0,HORA);
-				case 'B': actualizarCampo('D',1); imprimir();
-				case 'C': actualizarCampo('D',0); imprimir();
-			}
+				case 'A': estado=S4; salida(1,0,HORA); 
+				break;
+				case 'D': estado=S0; salida(0,0,HORA); 
+				break;
+				case 'B': actualizarCampo('D',1); imprimir(); 
+				break;
+				case 'C': actualizarCampo('D',0); imprimir(); 
+			} 
+		break;
 		case S4:
 			switch (key){
-				case 'A': estado=S5; salida(1,1,MINUTO);
-				case 'D': estado=S0; salida(0,1,MINUTO);
-				case 'B': actualizarCampo('h',1); imprimir();
-				case 'C': actualizarCampo('h',0); imprimir();
-			}
+				case 'A': estado=S5; salida(1,1,MINUTO); 
+				break;
+				case 'D': estado=S0; salida(0,1,MINUTO); 
+				break;
+				case 'B': actualizarCampo('h',1); imprimir(); 
+				break;
+				case 'C': actualizarCampo('h',0); imprimir(); 
+			} 
+		break;
 		case S5:
 			switch (key){
-				case 'A': estado=S6; salida(1,1,SEGUNDO);
-				case 'D': estado=S0; salida(0,1,SEGUNDO);
-				case 'B': actualizarCampo('m',1); imprimir();
-				case 'C': actualizarCampo('m',0); imprimir();
-			}
+				case 'A': estado=S6; salida(1,1,SEGUNDO); 
+				break;
+				case 'D': estado=S0; salida(0,1,SEGUNDO); 
+				break;
+				case 'B': actualizarCampo('m',1); imprimir(); 
+				break;
+				case 'C': actualizarCampo('m',0); imprimir(); 
+			} 
+		break;
 		case S6:
 			switch (key){
-				case 'A': estado=S0; salida(1,1,SEGUNDO); salida(0,1,SEGUNDO);
-				case 'D': estado=S0; salida(0,1,SEGUNDO);
-				case 'B': actualizarCampo('s',1); imprimir();
-				case 'C': actualizarCampo('s',0); imprimir();
-			}
+				case 'A': estado=S0; salida(1,1,SEGUNDO); salida(0,1,SEGUNDO); 
+				break;
+				case 'D': estado=S0; salida(0,1,SEGUNDO); 
+				break;
+				case 'B': actualizarCampo('s',1); imprimir(); 
+				break;
+				case 'C': actualizarCampo('s',0); imprimir(); 
+			} 
+		break;
 	}
 }
 
 void actualizarTiempo(){
-	LCDGotoXY(4,0);
-	LCDescribeDato(t.date,2);
-	LCDsendChar('/');
-	LCDescribeDato(t.month,2);
-	LCDsendChar('/');
-	LCDescribeDato(t.year,2);
 	LCDGotoXY(4,1);
 	LCDescribeDato(t.hour,2);
 	LCDsendChar(':');
 	LCDescribeDato(t.minute,2);
 	LCDsendChar(':');
 	LCDescribeDato(t.second,2);
+	LCDGotoXY(4,0);
+	LCDescribeDato(t.date,2);
+	LCDsendChar('/');
+	LCDescribeDato(t.month,2);
+	LCDsendChar('/');
+	LCDescribeDato(t.year,2);
 }
 
 void imprimir(){
@@ -253,7 +270,7 @@ void imprimir(){
 }
 
 void salida(uint8_t z,uint8_t pos,uint8_t campo){
-	if(z==1){
+	if(z){
 		t=t_Parcial;
 		LCDGotoXY(campo,pos);
 		FlagCursor=1;
@@ -265,7 +282,114 @@ void salida(uint8_t z,uint8_t pos,uint8_t campo){
 	}
 }
 
-
+void actualizarCampo(char campo,uint8_t estado){
+	switch (campo){
+		case 'A':
+			if(estado){
+				if(t_Parcial.year==99)
+					t_Parcial.year=0;
+				else t_Parcial.year++;
+			}
+			else{ 
+				if(t_Parcial.year==0)
+					t_Parcial.year=99;
+				else t_Parcial.year--;
+			}
+		break;
+		case 'M':
+			if(estado){
+				if(t_Parcial.month==12)
+					t_Parcial.month=1;
+				else t_Parcial.month++;
+			}
+			else{
+				if(t_Parcial.month==1)
+					t_Parcial.month=12;
+				else t_Parcial.month--;
+			}
+		break;
+		case 'D':
+			if(estado){
+				if ((t_Parcial.month==4) || (t_Parcial.month==6) || (t_Parcial.month==9) || (t_Parcial.month==11)){
+					if(t_Parcial.date==30)
+						t_Parcial.date=1;
+					else t_Parcial.date++;
+				}
+				else{
+					if((t.month==2) && (not_leap())){
+						if(t_Parcial.date==28)
+							t_Parcial.date=1;
+						else t_Parcial.date++;
+					}
+					else{ 
+						if((t.month==2) && (!not_leap())){
+							if(t_Parcial.date==29)
+								t_Parcial.date=1;
+							else t_Parcial.date++;
+						}
+					}
+				}
+			}
+			else{
+				if ((t_Parcial.month==4) || (t_Parcial.month==6) || (t_Parcial.month==9) || (t_Parcial.month==11)){
+					if(t_Parcial.date==1)
+						t_Parcial.date=30;
+					else t_Parcial.date--;
+				}
+				else{
+					if((t.month==2) && (not_leap())){
+						if(t_Parcial.date==1)
+							t_Parcial.date=28;
+						else t_Parcial.date--;
+					}
+					else{
+						if((t.month==2) && (!not_leap())){
+							if(t_Parcial.date==1)
+								t_Parcial.date=29;
+							else t_Parcial.date--;
+						}
+					}
+				}
+			}
+			break;
+			case 'h':
+				if(estado){
+					if(t_Parcial.hour==23)
+						t_Parcial.hour=0;
+					else t_Parcial.hour++;
+				}
+				else{
+					if(t_Parcial.hour==0)
+						t_Parcial.hour=23;
+					else t_Parcial.hour--;
+				}
+			break;
+			case 'm':
+				if(estado){
+					if(t_Parcial.minute==59)
+						t_Parcial.minute=0;
+					else t_Parcial.minute++;
+				}
+				else{
+					if(t_Parcial.minute==0)
+						t_Parcial.minute=59;
+					else t_Parcial.minute--;
+				}
+			break;
+			case 's':
+				if(estado){
+					if(t_Parcial.second==99)
+						t_Parcial.second=0;
+					else t_Parcial.second++;
+				}
+				else{
+					if(t_Parcial.second==0)
+						t_Parcial.second=99;
+					else t_Parcial.second--;
+				}
+			break;
+	}
+}
 /********************************************************
 FUNCION PARA ESCANEAR UN TECLADO MATRICIAL Y DEVOLVER LA
 TECLA PRESIONADA UNA SOLA VEZ. TIENE DOBLE VERIFICACION Y
