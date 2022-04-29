@@ -10,6 +10,7 @@
 #define F_CPU 8000000UL // Especifico la frecuencia de reloj del MCU en 8MHz
 #include <util/delay.h> // Retardos por software – Macros: depende de F_CPU
 #include "lcd.h"
+void setup();
 uint8_t KEYPAD_scan (uint8_t *);
 uint8_t KEYPAD_Update (uint8_t *);
 
@@ -24,8 +25,7 @@ int main(void)
     {
 		if(KEYPAD_Update (&key)){
 			LCDsendChar(key);//se manda key al lcd
-			LCDGotoXY(6,1);
-			_delay_ms(5);
+			LCDGotoXY(7,1);
 		}
     }
 }
@@ -34,9 +34,9 @@ void setup(){
 	LCDinit();
 	LCDclr();
 	//LCDhome();
-	LCDstring("CDyM PRUEBA",11);
+	LCDstring((uint8_t*)"CDyM PRUEBA",11);
 	LCDGotoXY(0,1);
-	LCDstring("Tecla:",6);
+	LCDstring((uint8_t*)"Tecla:",6);
 }
 /********************************************************
 FUNCION PARA ESCANEAR UN TECLADO MATRICIAL Y DEVOLVER LA
@@ -87,6 +87,7 @@ uint8_t KEYPAD_scan (uint8_t *key){
 		for(int r=0; r<4; r++){
 			if(!(PIND & columna[r])){
 				*key = codChar[c][r];
+				_delay_ms(20);
 				return(1);
 			}
 		}

@@ -18,13 +18,14 @@
 #define MINUTO 7
 #define SEGUNDO 10
 
-uint8_t KEYPAD_scan (uint8_t *);
-uint8_t KEYPAD_Update (uint8_t *);
 void setupLCD();
 void setupTimer();
+uint8_t KEYPAD_scan (uint8_t *);
+uint8_t KEYPAD_Update (uint8_t *);
 void actualizar_MEF();
 void iniciar_MEF();
 static char not_leap(void);
+static char not_leap_Parcial(void); 
 void salida(uint8_t,uint8_t,uint8_t);
 void actualizarTiempo(); 
 void actualizarCampo(char,uint8_t);
@@ -44,8 +45,9 @@ typedef struct{
 
 volatile time t={10,29,14,19,4,21};
 volatile time t_Parcial={10,29,14,19,4,21};
-volatile uint8_t FlagCursor=0;
-volatile uint8_t actualizar=1;
+volatile uint8_t FlagCambio=1;
+volatile uint8_t FlagCursor=1;
+volatile uint8_t actualizar=0;
 const uint8_t filas[4] =   {0b00010000,0b00001000,0b00000001,0b10000000};
 const uint8_t columna[4] = {0b00001000,0b00100000,0b00010000,0b00000100};
 const char codChar[4][4] = {{'1','2','3','A'},
@@ -56,14 +58,18 @@ const char codChar[4][4] = {{'1','2','3','A'},
 int main(void)
 {
     /* Replace with your application code */
+	setupLCD();
 	setupTimer();
-	LCDinit();
-	LCDclr();
 	iniciar_MEF();
 	while (1) 
     {
-		actualizar_MEF();	
+		actualizar_MEF();
     }
+}
+/*SETUP DE LA PANTALLA LCD*/
+void setupLCD(){
+	LCDinit();
+	LCDclr();
 }
 
 void setupTimer(){
@@ -82,18 +88,10 @@ void setupTimer(){
 
 ISR(TIMER2_OVF_vect)
 {
-	static uint8_t cambio=0;
-	if(FlagCursor){
-		if(cambio){
-			LCDcursorOn();
-		}
-		else{
-			LCDcursorOFF();
-		}
-		cambio=!cambio;
-	}
+	//FlagCursor=!FlagCursor;
 	if (++t.second==60)        //keep track of time, date, month, and year
 	{
+		FlagCambio=1;
 		t.second=0;
 		if (++t.minute==60)
 		{
@@ -152,6 +150,18 @@ static char not_leap(void)      //check for leap year
 	}
 }
 
+static char not_leap_Parcial(void)      //check for leap year
+{
+	if (!(t_Parcial.year%100))
+	{
+		return (char)(t_Parcial.year%400);
+	}
+	else
+	{
+		return (char)(t_Parcial.year%4);
+	}
+}
+
 void iniciar_MEF(){
 	estado=S0;t_Parcial=t;
 }
@@ -160,10 +170,15 @@ void actualizar_MEF(){
 	uint8_t key='#';
 	static uint8_t nuevo=0;
 	nuevo=KEYPAD_scan (&key);
+	/*if(FlagCambio){
+		if(FlagCursor)
+			LCDcursorOn();
+		else LCDcursorOFF();
+	}*/
 	switch (estado){
 		case S0:
 			switch (key){
-				case 'A': actualizar=0; t_Parcial=t; estado=S1; salida(1,0,ANO); 
+				case 'A': t_Parcial=t; estado=S1; salida(1,0,ANO); 
 				break;
 				case 'D': estado=S0; salida(0,0,ANO);
 				break;
@@ -220,9 +235,9 @@ void actualizar_MEF(){
 				break;
 				case 'D': estado=S0; salida(0,1,SEGUNDO); 
 				break;
-				case 'B': actualizarCampo('m',1); imprimir(); 
+				case 'B': actualizarCampo('n',1); imprimir(); 
 				break;
-				case 'C': actualizarCampo('m',0); imprimir(); 
+				case 'C': actualizarCampo('n',0); imprimir(); 
 			} 
 		break;
 		case S6:
@@ -240,18 +255,18 @@ void actualizar_MEF(){
 }
 
 void actualizarTiempo(){
-	LCDGotoXY(4,1);
-	LCDescribeDato(t.hour,2);
-	LCDsendChar(':');
-	LCDescribeDato(t.minute,2);
-	LCDsendChar(':');
-	LCDescribeDato(t.second,2);
 	LCDGotoXY(4,0);
 	LCDescribeDato(t.date,2);
 	LCDsendChar('/');
 	LCDescribeDato(t.month,2);
 	LCDsendChar('/');
 	LCDescribeDato(t.year,2);
+	LCDGotoXY(4,1);
+	LCDescribeDato(t.hour,2);
+	LCDsendChar(':');
+	LCDescribeDato(t.minute,2);
+	LCDsendChar(':');
+	LCDescribeDato(t.second,2);
 }
 
 void imprimir(){
@@ -267,18 +282,19 @@ void imprimir(){
 	LCDescribeDato(t_Parcial.minute,2);
 	LCDsendChar(':');
 	LCDescribeDato(t_Parcial.second,2);
+	
 }
 
 void salida(uint8_t z,uint8_t pos,uint8_t campo){
 	if(z){
 		t=t_Parcial;
 		LCDGotoXY(campo,pos);
-		FlagCursor=1;
+		FlagCambio=1;
 	}
 	else{
 		t_Parcial=t;
 		LCDGotoXY(campo,pos);
-		FlagCursor=0;
+		FlagCambio=0;
 	}
 }
 
@@ -316,13 +332,13 @@ void actualizarCampo(char campo,uint8_t estado){
 					else t_Parcial.date++;
 				}
 				else{
-					if((t.month==2) && (not_leap())){
+					if((t.month==2) && (not_leap_Parcial())){
 						if(t_Parcial.date==28)
 							t_Parcial.date=1;
 						else t_Parcial.date++;
 					}
 					else{ 
-						if((t.month==2) && (!not_leap())){
+						if((t.month==2) && (!not_leap_Parcial())){
 							if(t_Parcial.date==29)
 								t_Parcial.date=1;
 							else t_Parcial.date++;
@@ -364,7 +380,7 @@ void actualizarCampo(char campo,uint8_t estado){
 					else t_Parcial.hour--;
 				}
 			break;
-			case 'm':
+			case 'n':
 				if(estado){
 					if(t_Parcial.minute==59)
 						t_Parcial.minute=0;
@@ -398,7 +414,8 @@ DEVUELVE:
 0 -> NO HAYNUEVA TECLA PRESIONADA
 1 -> HAY NUEVA TECLA PRESIONADA Y ES *pkey
 ********************************************************/
-uint8_t KEYPAD_Update (uint8_t *pkey){
+uint8_t KEYPAD_Update (uint8_t *pkey)
+{
 	static uint8_t Old_key;
 	uint8_t Key, Last_valid_key=0xFF; // no hay tecla presionada
 	if(!KEYPAD_scan(&Key)) {
@@ -431,6 +448,7 @@ uint8_t KEYPAD_scan (uint8_t *key){
 		for(int r=0; r<4; r++){
 			if(!(PIND & columna[r])){
 				*key = codChar[c][r];
+				_delay_ms(20);
 				return(1);
 			}
 		}
