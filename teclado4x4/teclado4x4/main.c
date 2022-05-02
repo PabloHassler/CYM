@@ -74,7 +74,7 @@ const char codChar[4][4] = {{'1','2','3','A'},
 							{'0','*','#','D'}};
 
 uint8_t KEYPAD_scan (uint8_t *key){
-	PORTD=0b01111111;
+	PORTD=0b01111100;
 	
 	for(int c=0;c<4;c++){
 		//poner en cero las filas

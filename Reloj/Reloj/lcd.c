@@ -199,7 +199,7 @@ register uint8_t i;
 	for(i=0; i<nBytes; i++)
 	{
 		LCDsendChar(data[i]);
-		_delay_us(100);
+		_delay_us(20);
 	}
 }
 void LCDGotoXY(uint8_t x, uint8_t y)	//Cursor to X Y position
@@ -339,6 +339,7 @@ void LCDescribeDato(int val,unsigned int field_length)
 	for(i=j;i<5;i++)
 	{
 	LCDsendChar(48+str[i]);
+	//_delay_ms(20);
 	}
 }
 

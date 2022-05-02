@@ -11,12 +11,9 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #include "lcd.h"
-#define DIA 4
-#define MES 7
-#define ANO 10
-#define HORA 4
-#define MINUTO 7
-#define SEGUNDO 10
+#define DIA_HORA 4
+#define MES_MINUTO 7
+#define ANO_SEGUNDO 10
 
 void setupLCD();
 void setupTimer();
@@ -30,6 +27,7 @@ void salida(uint8_t,uint8_t,uint8_t);
 void actualizarTiempo(); 
 void actualizarCampo(char,uint8_t);
 void imprimir();
+void efecto_Apagado();
 
 typedef enum{S0,S1,S2,S3,S4,S5,S6} state;
 state estado;
@@ -45,9 +43,11 @@ typedef struct{
 
 volatile time t={10,29,14,19,4,21};
 volatile time t_Parcial={10,29,14,19,4,21};
-volatile uint8_t FlagCambio=1;
-volatile uint8_t FlagCursor=1;
+volatile uint8_t FlagLcd=0;
+volatile uint8_t FlagCambio=0;
+volatile uint8_t FlagCursor=0;
 volatile uint8_t actualizar=0;
+volatile uint8_t posicion[2]={0,0};
 const uint8_t filas[4] =   {0b00010000,0b00001000,0b00000001,0b10000000};
 const uint8_t columna[4] = {0b00001000,0b00100000,0b00010000,0b00000100};
 const char codChar[4][4] = {{'1','2','3','A'},
@@ -88,10 +88,11 @@ void setupTimer(){
 
 ISR(TIMER2_OVF_vect)
 {
-	//FlagCursor=!FlagCursor;
+	FlagLcd=1;
+	FlagCambio=!FlagCambio;
+	
 	if (++t.second==60)        //keep track of time, date, month, and year
 	{
-		FlagCambio=1;
 		t.second=0;
 		if (++t.minute==60)
 		{
@@ -170,131 +171,163 @@ void actualizar_MEF(){
 	uint8_t key='#';
 	static uint8_t nuevo=0;
 	nuevo=KEYPAD_scan (&key);
-	/*if(FlagCambio){
-		if(FlagCursor)
-			LCDcursorOn();
-		else LCDcursorOFF();
-	}*/
+	efecto_Apagado();
 	switch (estado){
 		case S0:
 			switch (key){
-				case 'A': t_Parcial=t; estado=S1; salida(1,0,ANO); 
+				case 'A': t_Parcial=t; estado=S1; salida(1,1,ANO_SEGUNDO); 
 				break;
-				case 'D': estado=S0; salida(0,0,ANO);
-				break;
+				case 'D': estado=S0; salida(0,1,ANO_SEGUNDO);
 				default: actualizarTiempo();
 			} 
 		break;
 		case S1:
 			switch (key){
-				case 'A': estado=S2; salida(1,0,MES); 
+				case 'A': estado=S2; salida(1,1,MES_MINUTO); 
 				break;
-				case 'D': estado=S0; salida(0,0,MES); 
+				case 'D': estado=S0; salida(0,1,MES_MINUTO); 
 				break;
-				case 'B': actualizarCampo('A',1); imprimir(); 
+				case 'B': actualizarCampo('A',1); imprimir(); LCDGotoXY(ANO_SEGUNDO,1);
 				break;
-				case 'C': actualizarCampo('A',0); imprimir(); 
+				case 'C': actualizarCampo('A',0); imprimir(); LCDGotoXY(ANO_SEGUNDO,1);
 			} 
 		break;
 		case S2:
 			switch (key){
-				case 'A': estado=S3; salida(1,0,DIA); 
+				case 'A': estado=S3; salida(1,1,DIA_HORA); 
 				break;
-				case 'D': estado=S0; salida(0,0,DIA); 
+				case 'D': estado=S0; salida(0,1,DIA_HORA);
 				break;
-				case 'B': actualizarCampo('M',1); imprimir(); 
+				case 'B': actualizarCampo('M',1); imprimir(); LCDGotoXY(MES_MINUTO,1);
 				break;
-				case 'C': actualizarCampo('M',0); imprimir(); 
+				case 'C': actualizarCampo('M',0); imprimir(); LCDGotoXY(MES_MINUTO,1);
 			} 
 		break;
 		case S3:
 			switch (key){
-				case 'A': estado=S4; salida(1,0,HORA); 
+				case 'A': estado=S4; salida(1,0,DIA_HORA);
 				break;
-				case 'D': estado=S0; salida(0,0,HORA); 
+				case 'D': estado=S0; salida(0,0,DIA_HORA); 
 				break;
-				case 'B': actualizarCampo('D',1); imprimir(); 
+				case 'B': actualizarCampo('D',1); imprimir(); LCDGotoXY(DIA_HORA,1);
 				break;
-				case 'C': actualizarCampo('D',0); imprimir(); 
+				case 'C': actualizarCampo('D',0); imprimir(); LCDGotoXY(DIA_HORA,1);
 			} 
 		break;
 		case S4:
 			switch (key){
-				case 'A': estado=S5; salida(1,1,MINUTO); 
+				case 'A': estado=S5; salida(1,0,MES_MINUTO); 
 				break;
-				case 'D': estado=S0; salida(0,1,MINUTO); 
+				case 'D': estado=S0; salida(0,0,MES_MINUTO); 
 				break;
-				case 'B': actualizarCampo('h',1); imprimir(); 
+				case 'B': actualizarCampo('h',1); imprimir(); LCDGotoXY(DIA_HORA,0);
 				break;
-				case 'C': actualizarCampo('h',0); imprimir(); 
+				case 'C': actualizarCampo('h',0); imprimir(); LCDGotoXY(DIA_HORA,0);
 			} 
 		break;
 		case S5:
 			switch (key){
-				case 'A': estado=S6; salida(1,1,SEGUNDO); 
+				case 'A': estado=S6; salida(1,0,ANO_SEGUNDO); 
 				break;
-				case 'D': estado=S0; salida(0,1,SEGUNDO); 
+				case 'D': estado=S0; salida(0,0,ANO_SEGUNDO); 
 				break;
-				case 'B': actualizarCampo('n',1); imprimir(); 
+				case 'B': actualizarCampo('n',1); imprimir(); LCDGotoXY(MES_MINUTO,0);
 				break;
-				case 'C': actualizarCampo('n',0); imprimir(); 
+				case 'C': actualizarCampo('n',0); imprimir(); LCDGotoXY(MES_MINUTO,0);
 			} 
 		break;
 		case S6:
 			switch (key){
-				case 'A': estado=S0; salida(1,1,SEGUNDO); salida(0,1,SEGUNDO); 
+				case 'A': estado=S0; salida(1,0,ANO_SEGUNDO); salida(0,0,ANO_SEGUNDO); 
 				break;
-				case 'D': estado=S0; salida(0,1,SEGUNDO); 
+				case 'D': estado=S0; salida(0,0,ANO_SEGUNDO); 
 				break;
-				case 'B': actualizarCampo('s',1); imprimir(); 
+				case 'B': actualizarCampo('s',1); imprimir(); LCDGotoXY(ANO_SEGUNDO,0);
 				break;
-				case 'C': actualizarCampo('s',0); imprimir(); 
+				case 'C': actualizarCampo('s',0); imprimir(); LCDGotoXY(ANO_SEGUNDO,0);
 			} 
 		break;
 	}
 }
 
+void efecto_Apagado(){
+	if(FlagCursor){
+		if(FlagCambio){
+			switch (posicion[0]){
+				case ANO_SEGUNDO: 
+					if(!posicion[1])
+						LCDescribeDato(t_Parcial.second,2);
+					else LCDescribeDato(t_Parcial.year,2);
+				break;
+				case MES_MINUTO: 
+					if(!posicion[1])
+						LCDescribeDato(t_Parcial.minute,2);
+					else LCDescribeDato(t_Parcial.month,2);
+				break;
+				case DIA_HORA: 
+					if(!posicion[1])
+						LCDescribeDato(t_Parcial.hour,2);
+					else LCDescribeDato(t_Parcial.date,2);
+				break;
+			}
+		}
+		else LCDstring((uint8_t*)"  ",2);
+		
+		LCDGotoXY(posicion[0],posicion[1]);
+	}
+}
+
 void actualizarTiempo(){
-	LCDGotoXY(4,0);
-	LCDescribeDato(t.date,2);
-	LCDsendChar('/');
-	LCDescribeDato(t.month,2);
-	LCDsendChar('/');
-	LCDescribeDato(t.year,2);
-	LCDGotoXY(4,1);
-	LCDescribeDato(t.hour,2);
-	LCDsendChar(':');
-	LCDescribeDato(t.minute,2);
-	LCDsendChar(':');
-	LCDescribeDato(t.second,2);
+	if(FlagLcd){
+		FlagLcd=0;
+		LCDGotoXY(4,1);
+		LCDescribeDato(t.date,2);
+		LCDsendChar('/');
+		LCDescribeDato(t.month,2);
+		LCDsendChar('/');
+		LCDescribeDato(t.year,2);
+		LCDGotoXY(4,0);
+		LCDescribeDato(t.hour,2);
+		LCDsendChar(':');
+		LCDescribeDato(t.minute,2);
+		LCDsendChar(':');
+		LCDescribeDato(t.second,2);
+	}
 }
 
 void imprimir(){
-	LCDGotoXY(4,0);
-	LCDescribeDato(t_Parcial.date,2);
-	LCDsendChar('/');
-	LCDescribeDato(t_Parcial.month,2);
-	LCDsendChar('/');
-	LCDescribeDato(t_Parcial.year,2);
-	LCDGotoXY(4,1);
-	LCDescribeDato(t_Parcial.hour,2);
-	LCDsendChar(':');
-	LCDescribeDato(t_Parcial.minute,2);
-	LCDsendChar(':');
-	LCDescribeDato(t_Parcial.second,2);
-	
+	if(FlagLcd){
+		FlagLcd=0;
+		LCDGotoXY(4,1);
+		LCDescribeDato(t_Parcial.date,2);
+		LCDsendChar('/');
+		LCDescribeDato(t_Parcial.month,2);
+		LCDsendChar('/');
+		LCDescribeDato(t_Parcial.year,2);
+		LCDGotoXY(4,0);
+		LCDescribeDato(t_Parcial.hour,2);
+		LCDsendChar(':');
+		LCDescribeDato(t_Parcial.minute,2);
+		LCDsendChar(':');
+		LCDescribeDato(t_Parcial.second,2);
+	}
 }
 
-void salida(uint8_t z,uint8_t pos,uint8_t campo){
+void salida(uint8_t z,uint8_t eje_Y,uint8_t eje_X){
 	if(z){
 		t=t_Parcial;
-		LCDGotoXY(campo,pos);
-		FlagCambio=1;
+		imprimir();
+		LCDGotoXY(eje_X,eje_Y);
+		posicion[0]=eje_X;
+		posicion[1]=eje_Y;
+		FlagCursor=1;
 	}
 	else{
 		t_Parcial=t;
-		LCDGotoXY(campo,pos);
-		FlagCambio=0;
+		LCDGotoXY(eje_X,eje_Y);
+		posicion[0]=eje_X;
+		posicion[1]=eje_Y;
+		FlagCursor=0;
 	}
 }
 
@@ -343,6 +376,11 @@ void actualizarCampo(char campo,uint8_t estado){
 								t_Parcial.date=1;
 							else t_Parcial.date++;
 						}
+						else{
+							if(t_Parcial.date==31)
+								t_Parcial.date=1;
+							else t_Parcial.date++;
+						}
 					}
 				}
 			}
@@ -353,15 +391,20 @@ void actualizarCampo(char campo,uint8_t estado){
 					else t_Parcial.date--;
 				}
 				else{
-					if((t.month==2) && (not_leap())){
+					if((t.month==2) && (not_leap_Parcial())){
 						if(t_Parcial.date==1)
 							t_Parcial.date=28;
 						else t_Parcial.date--;
 					}
 					else{
-						if((t.month==2) && (!not_leap())){
+						if((t.month==2) && (!not_leap_Parcial())){
 							if(t_Parcial.date==1)
 								t_Parcial.date=29;
+							else t_Parcial.date--;
+						}
+						else{
+							if(t_Parcial.date==1)
+								t_Parcial.date=31;
 							else t_Parcial.date--;
 						}
 					}
@@ -394,13 +437,13 @@ void actualizarCampo(char campo,uint8_t estado){
 			break;
 			case 's':
 				if(estado){
-					if(t_Parcial.second==99)
+					if(t_Parcial.second==59)
 						t_Parcial.second=0;
 					else t_Parcial.second++;
 				}
 				else{
 					if(t_Parcial.second==0)
-						t_Parcial.second=99;
+						t_Parcial.second=59;
 					else t_Parcial.second--;
 				}
 			break;
@@ -435,7 +478,7 @@ uint8_t KEYPAD_Update (uint8_t *pkey)
 }
 
 uint8_t KEYPAD_scan (uint8_t *key){
-	PORTD=0b01111111;
+	PORTD=0b00111100;
 	
 	for(int c=0;c<4;c++){
 		//poner en cero las filas
