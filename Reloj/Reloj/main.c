@@ -6,7 +6,7 @@
  */  
 
 /* Inclusión de cabeceras de bibliotecas de código */
-
+//#include "main.h"
 #include <avr/io.h>			// Definición de Registros del microcontrolador
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
@@ -28,6 +28,7 @@ void actualizarTiempo();
 void actualizarCampo(char,uint8_t);
 void imprimir();
 void efecto_Apagado();
+void relojFuncion();
 
 typedef enum{S0,S1,S2,S3,S4,S5,S6} state;
 state estado;
@@ -41,7 +42,7 @@ typedef struct{
 	unsigned char year;
 }time;
 
-volatile time t={10,29,14,19,4,21};
+volatile time t={10,29,14,19,4,98};
 volatile time t_Parcial={10,29,14,19,4,21};
 volatile uint8_t FlagLcd=0;
 volatile uint8_t FlagCambio=0;
@@ -58,8 +59,8 @@ const char codChar[4][4] = {{'1','2','3','A'},
 int main(void)
 {
     /* Replace with your application code */
-	setupLCD();
 	setupTimer();
+	setupLCD();
 	iniciar_MEF();
 	while (1) 
     {
@@ -70,23 +71,30 @@ int main(void)
 void setupLCD(){
 	LCDinit();
 	LCDclr();
+	LCDcursorOFF();
+
 }
 
 void setupTimer(){
-	DDRC = 0xFF;											//Configure all eight pins of port B as outputs
-	TIMSK2 &= ~((1<<TOIE2)|(1<<OCIE2A));					//Make sure all TC0 interrupts are disabled
-	ASSR |= (1<<AS2);										//set Timer/counter0 to be asynchronous from the CPU clock
-															//with a second external clock (32,768kHz)driving it.
-	TCNT2 =0;												//Reset timer
-	TCCR2B =(1<<CS20)|(1<<CS22);							//Prescale the timer to be clock source/128 to make it
-															//exactly 1 second for every overflow to occur
-	while (ASSR & ((1<<TCN2UB)|(1<<OCR2AUB)|(1<<TCR2AUB)))	//Wait until TC0 is updated
-	{}
-	TIMSK2 |= (1<<TOIE2);									//Set 8-bit Timer/Counter0 Overflow Interrupt Enable
-	sei();
+	DDRB=0b00100000;//PB5 como salida
+	TCCR0B=(1<<CS02)|(1<<CS00);//configurar el registro del timer0 como temporizador con prescalador de 1024
+	TCNT0=99;//el registro empieza con valor 99
+	TIMSK0|= (1<<TOIE0);//habilita la interrupcion por desbordamiento del timer0
+	sei();//habilita interrupciones globales
 }
 
-ISR(TIMER2_OVF_vect)
+ISR(TIMER0_OVF_vect)
+{
+	uint8_t static cont=0;
+	cont++;
+	if(cont==50){
+		relojFuncion();
+		TCNT2=99;//reinicio contador del timer0
+		cont=0;//reinicio contador
+	}
+	
+}
+void relojFuncion()
 {
 	FlagLcd=1;
 	FlagCambio=!FlagCambio;
@@ -169,7 +177,7 @@ void iniciar_MEF(){
 
 void actualizar_MEF(){
 	uint8_t key='#';
-	static uint8_t nuevo=0;
+	uint8_t static nuevo=0;
 	nuevo=KEYPAD_scan (&key);
 	efecto_Apagado();
 	switch (estado){
@@ -334,16 +342,12 @@ void salida(uint8_t z,uint8_t eje_Y,uint8_t eje_X){
 void actualizarCampo(char campo,uint8_t estado){
 	switch (campo){
 		case 'A':
-			if(estado){
-				if(t_Parcial.year==99)
-					t_Parcial.year=0;
-				else t_Parcial.year++;
-			}
-			else{ 
-				if(t_Parcial.year==0)
-					t_Parcial.year=99;
-				else t_Parcial.year--;
-			}
+			if(!estado)
+				estado = -1;
+			t_Parcial.year += 1*estado;
+			t_Parcial.year = t_Parcial.year % 100;
+			if(t_Parcial.year == 0 && !estado)
+				t_Parcial.year = 99;
 		break;
 		case 'M':
 			if(estado){
@@ -491,7 +495,7 @@ uint8_t KEYPAD_scan (uint8_t *key){
 		for(int r=0; r<4; r++){
 			if(!(PIND & columna[r])){
 				*key = codChar[c][r];
-				_delay_ms(20);
+				_delay_ms(500);
 				return(1);
 			}
 		}
