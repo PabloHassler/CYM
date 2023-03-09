@@ -148,6 +148,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Interrupcion.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lcd.c">
       <SubType>compile</SubType>
     </Compile>
@@ -158,6 +161,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Reloj.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Reloj.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Teclado.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Teclado.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

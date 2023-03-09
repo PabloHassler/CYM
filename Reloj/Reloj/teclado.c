@@ -1,47 +1,14 @@
 /*
- * teclado4x4.c
- *
- * Created: 11/4/2022 19:09:11
- * Author : Administrator
+ * Teclado.c
  */ 
 
-/* Inclusión de cabeceras de bibliotecas de código */
-#include <avr/io.h> // Definición de Registros del microcontrolador
-#define F_CPU 16000000UL // Especifico la frecuencia de reloj del MCU en 8MHz
-#include <util/delay.h> // Retardos por software – Macros: depende de F_CPU
-#include "lcd.h"
-uint8_t KEYPAD_scan (uint8_t *);
-uint8_t KEYPAD_Update (uint8_t *);
-
-int main(void)
-{
-    /* Replace with your application code */
-    uint8_t key=0x00;
-	LCDinit();
-	LCDclr();
-	//setup();
-	LCDhome();
-	LCDsendChar('a');
-	LCDcursorOnBlink();
-	while (1) 
-    {
-    }
-}
-/*SETUP DE LA PANTALLA LCD*/
-void setup(){
-	LCDinit();
-	LCDclr();
-	LCDhome();
-	LCDstring((uint8_t *)"CDyM PRUEBA",11);
-	LCDGotoXY(0,1);
-	LCDstring((uint8_t *)"Tecla:",6);
-}
+#include "Teclado.h"
 /********************************************************
 FUNCION PARA ESCANEAR UN TECLADO MATRICIAL Y DEVOLVER LA
 TECLA PRESIONADA UNA SOLA VEZ. TIENE DOBLE VERIFICACION Y
 MEMORIZA LA ULTIMA TECLA PRESIONADA
 DEVUELVE:
-0 -> NO HAYNUEVA TECLA PRESIONADA
+0 -> NO HAY NUEVA TECLA PRESIONADA
 1 -> HAY NUEVA TECLA PRESIONADA Y ES *pkey
 ********************************************************/
 uint8_t KEYPAD_Update (uint8_t *pkey)
@@ -64,15 +31,8 @@ uint8_t KEYPAD_Update (uint8_t *pkey)
 	return 0;
 }
 
-const uint8_t filas[4] =   {0b00010000,0b00001000,0b00000001,0b10000000};
-const uint8_t columna[4] = {0b00001000,0b00100000,0b00010000,0b00000100};
-const char codChar[4][4] = {{'1','2','3','A'},
-							{'4','5','6','B'},
-							{'7','8','9','C'},
-							{'0','*','#','D'}};
-
 uint8_t KEYPAD_scan (uint8_t *key){
-	PORTD=0b01111111;
+	PORTD=0b00111100;
 	
 	for(int c=0;c<4;c++){
 		//poner en cero las filas
@@ -85,6 +45,7 @@ uint8_t KEYPAD_scan (uint8_t *key){
 		for(int r=0; r<4; r++){
 			if(!(PIND & columna[r])){
 				*key = codChar[c][r];
+				_delay_ms(8);
 				return(1);
 			}
 		}

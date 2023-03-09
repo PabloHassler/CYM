@@ -1,0 +1,1099 @@
+
+LedRGB.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         000000a6  00800100  000006a0  00000734  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000006a0  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          0000004b  008001a6  008001a6  000007da  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000007da  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000080c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000001a0  00000000  00000000  0000084c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000014c3  00000000  00000000  000009ec  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000b8c  00000000  00000000  00001eaf  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000b85  00000000  00000000  00002a3b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000003e8  00000000  00000000  000035c0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000767  00000000  00000000  000039a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000008c2  00000000  00000000  0000410f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000150  00000000  00000000  000049d1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 3b 00 	jmp	0x76	; 0x76 <__ctors_end>
+   4:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+   8:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+   c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  10:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  14:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  18:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  1c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  20:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  24:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  28:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  2c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  30:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  34:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  38:	0c 94 0e 01 	jmp	0x21c	; 0x21c <__vector_14>
+  3c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  40:	0c 94 25 01 	jmp	0x24a	; 0x24a <__vector_16>
+  44:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  48:	0c 94 eb 01 	jmp	0x3d6	; 0x3d6 <__vector_18>
+  4c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  50:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  54:	0c 94 f3 00 	jmp	0x1e6	; 0x1e6 <__vector_21>
+  58:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  5c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  60:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  64:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  68:	80 02       	muls	r24, r16
+  6a:	88 02       	muls	r24, r24
+  6c:	a0 02       	muls	r26, r16
+  6e:	a8 02       	muls	r26, r24
+  70:	c1 02       	muls	r28, r17
+  72:	c9 02       	muls	r28, r25
+  74:	e1 02       	muls	r30, r17
+
+00000076 <__ctors_end>:
+  76:	11 24       	eor	r1, r1
+  78:	1f be       	out	0x3f, r1	; 63
+  7a:	cf ef       	ldi	r28, 0xFF	; 255
+  7c:	d8 e0       	ldi	r29, 0x08	; 8
+  7e:	de bf       	out	0x3e, r29	; 62
+  80:	cd bf       	out	0x3d, r28	; 61
+
+00000082 <__do_copy_data>:
+  82:	11 e0       	ldi	r17, 0x01	; 1
+  84:	a0 e0       	ldi	r26, 0x00	; 0
+  86:	b1 e0       	ldi	r27, 0x01	; 1
+  88:	e0 ea       	ldi	r30, 0xA0	; 160
+  8a:	f6 e0       	ldi	r31, 0x06	; 6
+  8c:	02 c0       	rjmp	.+4      	; 0x92 <__do_copy_data+0x10>
+  8e:	05 90       	lpm	r0, Z+
+  90:	0d 92       	st	X+, r0
+  92:	a6 3a       	cpi	r26, 0xA6	; 166
+  94:	b1 07       	cpc	r27, r17
+  96:	d9 f7       	brne	.-10     	; 0x8e <__do_copy_data+0xc>
+
+00000098 <__do_clear_bss>:
+  98:	21 e0       	ldi	r18, 0x01	; 1
+  9a:	a6 ea       	ldi	r26, 0xA6	; 166
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	01 c0       	rjmp	.+2      	; 0xa2 <.do_clear_bss_start>
+
+000000a0 <.do_clear_bss_loop>:
+  a0:	1d 92       	st	X+, r1
+
+000000a2 <.do_clear_bss_start>:
+  a2:	a1 3f       	cpi	r26, 0xF1	; 241
+  a4:	b2 07       	cpc	r27, r18
+  a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
+  a8:	0e 94 5a 00 	call	0xb4	; 0xb4 <main>
+  ac:	0c 94 4e 03 	jmp	0x69c	; 0x69c <_exit>
+
+000000b0 <__bad_interrupt>:
+  b0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000b4 <main>:
+int RGB[3] = {50,50,125};
+
+volatile int flagTimer=0;
+int main(void)
+{
+	setupPWM();
+  b4:	0e 94 4c 01 	call	0x298	; 0x298 <setupPWM>
+	setupTimer(); 
+  b8:	0e 94 3c 01 	call	0x278	; 0x278 <setupTimer>
+	setupPines(); //Setup pines de salida para PWM
+  bc:	0e 94 48 01 	call	0x290	; 0x290 <setupPines>
+	setupSerialPort(103); //Setup UART
+  c0:	87 e6       	ldi	r24, 0x67	; 103
+  c2:	90 e0       	ldi	r25, 0x00	; 0
+  c4:	0e 94 e2 01 	call	0x3c4	; 0x3c4 <setupSerialPort>
+	setupADC();   //Setup ADC potenciometro
+  c8:	0e 94 6e 00 	call	0xdc	; 0xdc <setupADC>
+	sei();
+  cc:	78 94       	sei
+    /* Replace with your application code */
+	iniciar_MEF();	
+  ce:	0e 94 32 02 	call	0x464	; 0x464 <iniciar_MEF>
+	while (1) 
+    {
+		actualizar_MEF(); //Muestra mensajes y captura de datos del usuario
+  d2:	0e 94 71 02 	call	0x4e2	; 0x4e2 <actualizar_MEF>
+		intensidad();	  //Captura el valor del potenciometro y regula la intencidad del LED
+  d6:	0e 94 8e 00 	call	0x11c	; 0x11c <intensidad>
+  da:	fb cf       	rjmp	.-10     	; 0xd2 <main+0x1e>
+
+000000dc <setupADC>:
+volatile int flagPote=0;
+volatile int pote=0;
+extern int RGB[3];
+
+void setupADC(){
+	ADCSRA = 0;
+  dc:	ea e7       	ldi	r30, 0x7A	; 122
+  de:	f0 e0       	ldi	r31, 0x00	; 0
+  e0:	10 82       	st	Z, r1
+	ADCSRB = 0;
+  e2:	10 92 7b 00 	sts	0x007B, r1	; 0x80007b <__TEXT_REGION_LENGTH__+0x7f807b>
+	ADMUX |= (1 << REFS0); //set reference voltage 5V
+  e6:	ac e7       	ldi	r26, 0x7C	; 124
+  e8:	b0 e0       	ldi	r27, 0x00	; 0
+  ea:	8c 91       	ld	r24, X
+  ec:	80 64       	ori	r24, 0x40	; 64
+  ee:	8c 93       	st	X, r24
+	ADMUX |= (1 << ADLAR); //left align the ADC value- so we can read highest 8 bits from ADCH register only //
+  f0:	8c 91       	ld	r24, X
+  f2:	80 62       	ori	r24, 0x20	; 32
+  f4:	8c 93       	st	X, r24
+	ADMUX |= (1 << MUX0)|(1 << MUX1); //set reference voltage 5V
+  f6:	8c 91       	ld	r24, X
+  f8:	83 60       	ori	r24, 0x03	; 3
+  fa:	8c 93       	st	X, r24
+	ADCSRA |= (1 << ADPS2)|(1 << ADPS1)|(1 << ADPS0); //prescalador ADC 128
+  fc:	80 81       	ld	r24, Z
+  fe:	87 60       	ori	r24, 0x07	; 7
+ 100:	80 83       	st	Z, r24
+	ADCSRA |= (1 << ADATE); //enabble auto trigger
+ 102:	80 81       	ld	r24, Z
+ 104:	80 62       	ori	r24, 0x20	; 32
+ 106:	80 83       	st	Z, r24
+	ADCSRA |= (1 << ADIE); //enable interrupts when measurement complete
+ 108:	80 81       	ld	r24, Z
+ 10a:	88 60       	ori	r24, 0x08	; 8
+ 10c:	80 83       	st	Z, r24
+	ADCSRA |= (1 << ADEN); //enable ADC
+ 10e:	80 81       	ld	r24, Z
+ 110:	80 68       	ori	r24, 0x80	; 128
+ 112:	80 83       	st	Z, r24
+	ADCSRA |= (1 << ADSC); //start ADC measurements
+ 114:	80 81       	ld	r24, Z
+ 116:	80 64       	ori	r24, 0x40	; 64
+ 118:	80 83       	st	Z, r24
+ 11a:	08 95       	ret
+
+0000011c <intensidad>:
+}
+
+void intensidad(){
+ 11c:	ef 92       	push	r14
+ 11e:	ff 92       	push	r15
+ 120:	0f 93       	push	r16
+ 122:	1f 93       	push	r17
+ 124:	cf 93       	push	r28
+ 126:	df 93       	push	r29
+	if(flagPote){							//Esperamos a que hay a nueva información en el ADC
+ 128:	80 91 ac 01 	lds	r24, 0x01AC	; 0x8001ac <flagPote>
+ 12c:	90 91 ad 01 	lds	r25, 0x01AD	; 0x8001ad <flagPote+0x1>
+ 130:	89 2b       	or	r24, r25
+ 132:	09 f4       	brne	.+2      	; 0x136 <intensidad+0x1a>
+ 134:	51 c0       	rjmp	.+162    	; 0x1d8 <intensidad+0xbc>
+		flagPote = 0;						//Desactivamos el flag de nueva información del pote
+ 136:	10 92 ad 01 	sts	0x01AD, r1	; 0x8001ad <flagPote+0x1>
+ 13a:	10 92 ac 01 	sts	0x01AC, r1	; 0x8001ac <flagPote>
+		uint8_t porcentajePote = (pote * 100)/(255);		//Calculo porcentual del alor del potenciomentro
+ 13e:	20 91 aa 01 	lds	r18, 0x01AA	; 0x8001aa <pote>
+ 142:	30 91 ab 01 	lds	r19, 0x01AB	; 0x8001ab <pote+0x1>
+ 146:	44 e6       	ldi	r20, 0x64	; 100
+ 148:	42 9f       	mul	r20, r18
+ 14a:	c0 01       	movw	r24, r0
+ 14c:	43 9f       	mul	r20, r19
+ 14e:	90 0d       	add	r25, r0
+ 150:	11 24       	eor	r1, r1
+ 152:	6f ef       	ldi	r22, 0xFF	; 255
+ 154:	70 e0       	ldi	r23, 0x00	; 0
+ 156:	0e 94 fa 02 	call	0x5f4	; 0x5f4 <__divmodhi4>
+		uint8_t finalR=(int)((RGB[0]*porcentajePote)/100);	//Calculo valor led Rojo con el valor de intensidad del potenciometro
+ 15a:	e0 e0       	ldi	r30, 0x00	; 0
+ 15c:	f1 e0       	ldi	r31, 0x01	; 1
+ 15e:	40 81       	ld	r20, Z
+ 160:	51 81       	ldd	r21, Z+1	; 0x01
+ 162:	9b 01       	movw	r18, r22
+ 164:	33 27       	eor	r19, r19
+ 166:	42 9f       	mul	r20, r18
+ 168:	c0 01       	movw	r24, r0
+ 16a:	43 9f       	mul	r20, r19
+ 16c:	90 0d       	add	r25, r0
+ 16e:	52 9f       	mul	r21, r18
+ 170:	90 0d       	add	r25, r0
+ 172:	11 24       	eor	r1, r1
+ 174:	c4 e6       	ldi	r28, 0x64	; 100
+ 176:	d0 e0       	ldi	r29, 0x00	; 0
+ 178:	be 01       	movw	r22, r28
+ 17a:	0e 94 fa 02 	call	0x5f4	; 0x5f4 <__divmodhi4>
+ 17e:	7b 01       	movw	r14, r22
+		uint8_t finalG=(int)((RGB[1]*porcentajePote)/100);	//Calculo valor led Verde con el valor de intensidad del potenciometro
+ 180:	42 81       	ldd	r20, Z+2	; 0x02
+ 182:	53 81       	ldd	r21, Z+3	; 0x03
+ 184:	42 9f       	mul	r20, r18
+ 186:	c0 01       	movw	r24, r0
+ 188:	43 9f       	mul	r20, r19
+ 18a:	90 0d       	add	r25, r0
+ 18c:	52 9f       	mul	r21, r18
+ 18e:	90 0d       	add	r25, r0
+ 190:	11 24       	eor	r1, r1
+ 192:	be 01       	movw	r22, r28
+ 194:	0e 94 fa 02 	call	0x5f4	; 0x5f4 <__divmodhi4>
+ 198:	8b 01       	movw	r16, r22
+		uint8_t finalB=(int)((RGB[2]*porcentajePote)/100);	//Calculo valor led Azul con el valor de intensidad del potenciometro
+ 19a:	44 81       	ldd	r20, Z+4	; 0x04
+ 19c:	55 81       	ldd	r21, Z+5	; 0x05
+ 19e:	42 9f       	mul	r20, r18
+ 1a0:	c0 01       	movw	r24, r0
+ 1a2:	43 9f       	mul	r20, r19
+ 1a4:	90 0d       	add	r25, r0
+ 1a6:	52 9f       	mul	r21, r18
+ 1a8:	90 0d       	add	r25, r0
+ 1aa:	11 24       	eor	r1, r1
+ 1ac:	be 01       	movw	r22, r28
+ 1ae:	0e 94 fa 02 	call	0x5f4	; 0x5f4 <__divmodhi4>
+ 1b2:	eb 01       	movw	r28, r22
+		
+		pwm('R',finalR);	//Actualizacion del pwm con el porcentaje ciclo de trabajo, Rojo
+ 1b4:	b7 01       	movw	r22, r14
+ 1b6:	77 27       	eor	r23, r23
+ 1b8:	82 e5       	ldi	r24, 0x52	; 82
+ 1ba:	90 e0       	ldi	r25, 0x00	; 0
+ 1bc:	0e 94 52 01 	call	0x2a4	; 0x2a4 <pwm>
+		pwm('G',finalG);	//Actualizacion del pwm con el porcentaje ciclo de trabajo, Verde
+ 1c0:	b8 01       	movw	r22, r16
+ 1c2:	77 27       	eor	r23, r23
+ 1c4:	87 e4       	ldi	r24, 0x47	; 71
+ 1c6:	90 e0       	ldi	r25, 0x00	; 0
+ 1c8:	0e 94 52 01 	call	0x2a4	; 0x2a4 <pwm>
+		pwm('B',finalB);	//Actualizacion del pwm con el porcentaje ciclo de trabajo, Azul
+ 1cc:	be 01       	movw	r22, r28
+ 1ce:	77 27       	eor	r23, r23
+ 1d0:	82 e4       	ldi	r24, 0x42	; 66
+ 1d2:	90 e0       	ldi	r25, 0x00	; 0
+ 1d4:	0e 94 52 01 	call	0x2a4	; 0x2a4 <pwm>
+	}
+}
+ 1d8:	df 91       	pop	r29
+ 1da:	cf 91       	pop	r28
+ 1dc:	1f 91       	pop	r17
+ 1de:	0f 91       	pop	r16
+ 1e0:	ff 90       	pop	r15
+ 1e2:	ef 90       	pop	r14
+ 1e4:	08 95       	ret
+
+000001e6 <__vector_21>:
+
+ISR(ADC_vect) {//when new ADC value ready
+ 1e6:	1f 92       	push	r1
+ 1e8:	0f 92       	push	r0
+ 1ea:	0f b6       	in	r0, 0x3f	; 63
+ 1ec:	0f 92       	push	r0
+ 1ee:	11 24       	eor	r1, r1
+ 1f0:	8f 93       	push	r24
+ 1f2:	9f 93       	push	r25
+	pote=ADCH;			//Captura de la parte alta del valor del potenciometro
+ 1f4:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
+ 1f8:	90 e0       	ldi	r25, 0x00	; 0
+ 1fa:	90 93 ab 01 	sts	0x01AB, r25	; 0x8001ab <pote+0x1>
+ 1fe:	80 93 aa 01 	sts	0x01AA, r24	; 0x8001aa <pote>
+	flagPote=1;			//Flag de nueva informacion del potenciometro
+ 202:	81 e0       	ldi	r24, 0x01	; 1
+ 204:	90 e0       	ldi	r25, 0x00	; 0
+ 206:	90 93 ad 01 	sts	0x01AD, r25	; 0x8001ad <flagPote+0x1>
+ 20a:	80 93 ac 01 	sts	0x01AC, r24	; 0x8001ac <flagPote>
+ 20e:	9f 91       	pop	r25
+ 210:	8f 91       	pop	r24
+ 212:	0f 90       	pop	r0
+ 214:	0f be       	out	0x3f, r0	; 63
+ 216:	0f 90       	pop	r0
+ 218:	1f 90       	pop	r1
+ 21a:	18 95       	reti
+
+0000021c <__vector_14>:
+
+/*
+*Rutina de atención de interrupción Timer
+*/
+ISR(TIMER0_COMPA_vect)
+{
+ 21c:	1f 92       	push	r1
+ 21e:	0f 92       	push	r0
+ 220:	0f b6       	in	r0, 0x3f	; 63
+ 222:	0f 92       	push	r0
+ 224:	11 24       	eor	r1, r1
+ 226:	8f 93       	push	r24
+ 228:	9f 93       	push	r25
+	if(flagTimer){
+ 22a:	80 91 a6 01 	lds	r24, 0x01A6	; 0x8001a6 <__data_end>
+ 22e:	90 91 a7 01 	lds	r25, 0x01A7	; 0x8001a7 <__data_end+0x1>
+ 232:	89 2b       	or	r24, r25
+ 234:	19 f0       	breq	.+6      	; 0x23c <__vector_14+0x20>
+		PORTB |= (1 << 5);
+ 236:	85 b1       	in	r24, 0x05	; 5
+ 238:	80 62       	ori	r24, 0x20	; 32
+ 23a:	85 b9       	out	0x05, r24	; 5
+	}
+}
+ 23c:	9f 91       	pop	r25
+ 23e:	8f 91       	pop	r24
+ 240:	0f 90       	pop	r0
+ 242:	0f be       	out	0x3f, r0	; 63
+ 244:	0f 90       	pop	r0
+ 246:	1f 90       	pop	r1
+ 248:	18 95       	reti
+
+0000024a <__vector_16>:
+
+ISR(TIMER0_OVF_vect)
+{
+ 24a:	1f 92       	push	r1
+ 24c:	0f 92       	push	r0
+ 24e:	0f b6       	in	r0, 0x3f	; 63
+ 250:	0f 92       	push	r0
+ 252:	11 24       	eor	r1, r1
+ 254:	8f 93       	push	r24
+ 256:	9f 93       	push	r25
+	if(flagTimer){
+ 258:	80 91 a6 01 	lds	r24, 0x01A6	; 0x8001a6 <__data_end>
+ 25c:	90 91 a7 01 	lds	r25, 0x01A7	; 0x8001a7 <__data_end+0x1>
+ 260:	89 2b       	or	r24, r25
+ 262:	19 f0       	breq	.+6      	; 0x26a <__vector_16+0x20>
+		PORTB &= ~(1 << 5);
+ 264:	85 b1       	in	r24, 0x05	; 5
+ 266:	8f 7d       	andi	r24, 0xDF	; 223
+ 268:	85 b9       	out	0x05, r24	; 5
+	}
+}
+ 26a:	9f 91       	pop	r25
+ 26c:	8f 91       	pop	r24
+ 26e:	0f 90       	pop	r0
+ 270:	0f be       	out	0x3f, r0	; 63
+ 272:	0f 90       	pop	r0
+ 274:	1f 90       	pop	r1
+ 276:	18 95       	reti
+
+00000278 <setupTimer>:
+void setupTimer(){
+	TCCR0B |= (1<<CS01)|(1<<CS00);	//configurar el registro del timer0 como temporizador con prescalador de 1024
+ 278:	85 b5       	in	r24, 0x25	; 37
+ 27a:	83 60       	ori	r24, 0x03	; 3
+ 27c:	85 bd       	out	0x25, r24	; 37
+	TCCR0A = 0x03;				// modo PWM
+ 27e:	83 e0       	ldi	r24, 0x03	; 3
+ 280:	84 bd       	out	0x24, r24	; 36
+	OCR0A = 0;					//el registro empieza con valor 255
+ 282:	17 bc       	out	0x27, r1	; 39
+	TIMSK0 |= (1<<OCIE0A)|(1<<TOIE0); //habilita la interrupcion por desbordamiento del timer0
+ 284:	ee e6       	ldi	r30, 0x6E	; 110
+ 286:	f0 e0       	ldi	r31, 0x00	; 0
+ 288:	80 81       	ld	r24, Z
+ 28a:	83 60       	ori	r24, 0x03	; 3
+ 28c:	80 83       	st	Z, r24
+ 28e:	08 95       	ret
+
+00000290 <setupPines>:
+}
+void setupPines(){
+	DDRB |= (1<<1)|(1<<2)|(1<<5);
+ 290:	84 b1       	in	r24, 0x04	; 4
+ 292:	86 62       	ori	r24, 0x26	; 38
+ 294:	84 b9       	out	0x04, r24	; 4
+ 296:	08 95       	ret
+
+00000298 <setupPWM>:
+}
+void setupPWM(){
+	TCCR1B |= (1<<WGM12)|(1<<CS11)|(1<<CS10); //Configuracion prescalador en 64 y modo
+ 298:	e1 e8       	ldi	r30, 0x81	; 129
+ 29a:	f0 e0       	ldi	r31, 0x00	; 0
+ 29c:	80 81       	ld	r24, Z
+ 29e:	8b 60       	ori	r24, 0x0B	; 11
+ 2a0:	80 83       	st	Z, r24
+ 2a2:	08 95       	ret
+
+000002a4 <pwm>:
+}
+void pwm(int pin,int num){
+	switch(pin){
+ 2a4:	87 34       	cpi	r24, 0x47	; 71
+ 2a6:	91 05       	cpc	r25, r1
+ 2a8:	09 f1       	breq	.+66     	; 0x2ec <pwm+0x48>
+ 2aa:	82 35       	cpi	r24, 0x52	; 82
+ 2ac:	91 05       	cpc	r25, r1
+ 2ae:	29 f0       	breq	.+10     	; 0x2ba <pwm+0x16>
+ 2b0:	82 34       	cpi	r24, 0x42	; 66
+ 2b2:	91 05       	cpc	r25, r1
+ 2b4:	09 f0       	breq	.+2      	; 0x2b8 <pwm+0x14>
+ 2b6:	47 c0       	rjmp	.+142    	; 0x346 <pwm+0xa2>
+ 2b8:	32 c0       	rjmp	.+100    	; 0x31e <pwm+0x7a>
+		case 'R':		//Led rojo
+		if(num<3){		//Cota inferior para apagar el led
+ 2ba:	63 30       	cpi	r22, 0x03	; 3
+ 2bc:	71 05       	cpc	r23, r1
+ 2be:	64 f4       	brge	.+24     	; 0x2d8 <pwm+0x34>
+			TCCR1A &= ~(1<<COM1A1);	//Apagamos el PWM
+ 2c0:	e0 e8       	ldi	r30, 0x80	; 128
+ 2c2:	f0 e0       	ldi	r31, 0x00	; 0
+ 2c4:	80 81       	ld	r24, Z
+ 2c6:	8f 77       	andi	r24, 0x7F	; 127
+ 2c8:	80 83       	st	Z, r24
+			TCCR1A &= ~(1<<COM1A0);	
+ 2ca:	80 81       	ld	r24, Z
+ 2cc:	8f 7b       	andi	r24, 0xBF	; 191
+ 2ce:	80 83       	st	Z, r24
+			PORTB|= (1<<1);			//Seteamos la salida en alto
+ 2d0:	85 b1       	in	r24, 0x05	; 5
+ 2d2:	82 60       	ori	r24, 0x02	; 2
+ 2d4:	85 b9       	out	0x05, r24	; 5
+ 2d6:	08 95       	ret
+		}
+		else{			//Led prendido
+			TCCR1A |= (1<<WGM10)|(1<<COM1A1)|(1<<COM1A0); //Configuramos fast pwm, inverted
+ 2d8:	e0 e8       	ldi	r30, 0x80	; 128
+ 2da:	f0 e0       	ldi	r31, 0x00	; 0
+ 2dc:	80 81       	ld	r24, Z
+ 2de:	81 6c       	ori	r24, 0xC1	; 193
+ 2e0:	80 83       	st	Z, r24
+			OCR1A=num;									 // Asignamos el valor para el ciclo de trabajo
+ 2e2:	70 93 89 00 	sts	0x0089, r23	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+ 2e6:	60 93 88 00 	sts	0x0088, r22	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+ 2ea:	08 95       	ret
+		}
+		break;
+		case 'G':	   //Led Verde
+		if(num<3){		//Cota inferior para apagar el led
+ 2ec:	63 30       	cpi	r22, 0x03	; 3
+ 2ee:	71 05       	cpc	r23, r1
+ 2f0:	64 f4       	brge	.+24     	; 0x30a <pwm+0x66>
+			TCCR1A &= ~(1<<COM1B1);	//Apagamos el PWM
+ 2f2:	e0 e8       	ldi	r30, 0x80	; 128
+ 2f4:	f0 e0       	ldi	r31, 0x00	; 0
+ 2f6:	80 81       	ld	r24, Z
+ 2f8:	8f 7d       	andi	r24, 0xDF	; 223
+ 2fa:	80 83       	st	Z, r24
+			TCCR1A &= ~(1<<COM1B0);
+ 2fc:	80 81       	ld	r24, Z
+ 2fe:	8f 7e       	andi	r24, 0xEF	; 239
+ 300:	80 83       	st	Z, r24
+			PORTB|= (1<<2);		//Seteamos la salida en alto
+ 302:	85 b1       	in	r24, 0x05	; 5
+ 304:	84 60       	ori	r24, 0x04	; 4
+ 306:	85 b9       	out	0x05, r24	; 5
+ 308:	08 95       	ret
+		}
+		else{
+			TCCR1A |= (1<<WGM10)|(1<<COM1B1)|(1<<COM1B0);//Configuramos fast pwm, inverted
+ 30a:	e0 e8       	ldi	r30, 0x80	; 128
+ 30c:	f0 e0       	ldi	r31, 0x00	; 0
+ 30e:	80 81       	ld	r24, Z
+ 310:	81 63       	ori	r24, 0x31	; 49
+ 312:	80 83       	st	Z, r24
+			OCR1B=num;									//Asignamos el valor para el ciclo de trabajo
+ 314:	70 93 8b 00 	sts	0x008B, r23	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
+ 318:	60 93 8a 00 	sts	0x008A, r22	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
+ 31c:	08 95       	ret
+		}
+		break;
+		case 'B':				//Led azul
+		if(num<3){				//Cota inferior para apagar el led
+ 31e:	63 30       	cpi	r22, 0x03	; 3
+ 320:	71 05       	cpc	r23, r1
+ 322:	44 f4       	brge	.+16     	; 0x334 <pwm+0x90>
+			flagTimer = false;	//Desactivamos el pwm
+ 324:	10 92 a7 01 	sts	0x01A7, r1	; 0x8001a7 <__data_end+0x1>
+ 328:	10 92 a6 01 	sts	0x01A6, r1	; 0x8001a6 <__data_end>
+			PORTB|= (1<<5);		//Seteamos el led en alto
+ 32c:	85 b1       	in	r24, 0x05	; 5
+ 32e:	80 62       	ori	r24, 0x20	; 32
+ 330:	85 b9       	out	0x05, r24	; 5
+ 332:	08 95       	ret
+		}
+		else{					//Led prendido
+			flagTimer = true;	//Activamos el pwm
+ 334:	81 e0       	ldi	r24, 0x01	; 1
+ 336:	90 e0       	ldi	r25, 0x00	; 0
+ 338:	90 93 a7 01 	sts	0x01A7, r25	; 0x8001a7 <__data_end+0x1>
+ 33c:	80 93 a6 01 	sts	0x01A6, r24	; 0x8001a6 <__data_end>
+			TCCR0A=0x03;		//Configuramos fast pwm
+ 340:	83 e0       	ldi	r24, 0x03	; 3
+ 342:	84 bd       	out	0x24, r24	; 36
+			OCR0A=num;			//Registro de comparacion para el ciclo de trabajo
+ 344:	67 bd       	out	0x27, r22	; 39
+ 346:	08 95       	ret
+
+00000348 <SerialPort_Init>:
+	UCSR0B |= (1<<UDRIE0);
+}
+
+void SerialPort_TX_Interrupt_Disable(void)
+{
+	UCSR0B &=~(1<<UDRIE0);
+ 348:	10 92 c1 00 	sts	0x00C1, r1	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
+ 34c:	96 e0       	ldi	r25, 0x06	; 6
+ 34e:	90 93 c2 00 	sts	0x00C2, r25	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7f80c2>
+ 352:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
+ 356:	08 95       	ret
+
+00000358 <SerialPort_TX_Enable>:
+ 358:	e1 ec       	ldi	r30, 0xC1	; 193
+ 35a:	f0 e0       	ldi	r31, 0x00	; 0
+ 35c:	80 81       	ld	r24, Z
+ 35e:	88 60       	ori	r24, 0x08	; 8
+ 360:	80 83       	st	Z, r24
+ 362:	08 95       	ret
+
+00000364 <SerialPort_RX_Enable>:
+
+
+// Inicialización de Receptor
+
+void SerialPort_RX_Enable(void){
+	UCSR0B |= (1<<RXEN0);
+ 364:	e1 ec       	ldi	r30, 0xC1	; 193
+ 366:	f0 e0       	ldi	r31, 0x00	; 0
+ 368:	80 81       	ld	r24, Z
+ 36a:	80 61       	ori	r24, 0x10	; 16
+ 36c:	80 83       	st	Z, r24
+ 36e:	08 95       	ret
+
+00000370 <SerialPort_RX_Interrupt_Enable>:
+}
+
+void SerialPort_RX_Interrupt_Enable(void){
+	UCSR0B |= (1<<RXCIE0);
+ 370:	e1 ec       	ldi	r30, 0xC1	; 193
+ 372:	f0 e0       	ldi	r31, 0x00	; 0
+ 374:	80 81       	ld	r24, Z
+ 376:	80 68       	ori	r24, 0x80	; 128
+ 378:	80 83       	st	Z, r24
+ 37a:	08 95       	ret
+
+0000037c <SerialPort_Wait_For_TX_Buffer_Free>:
+// Transmisión
+
+// Espera hasta que el buffer de TX este libre.
+void SerialPort_Wait_For_TX_Buffer_Free(void){
+	// Pooling - Bloqueante hasta que termine de transmitir.
+	while(!(UCSR0A & (1<<UDRE0)));
+ 37c:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 380:	85 ff       	sbrs	r24, 5
+ 382:	fc cf       	rjmp	.-8      	; 0x37c <SerialPort_Wait_For_TX_Buffer_Free>
+}
+ 384:	08 95       	ret
+
+00000386 <SerialPort_Send_Data>:
+
+void SerialPort_Send_Data(char data){
+	UDR0 = data;
+ 386:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+ 38a:	08 95       	ret
+
+0000038c <SerialPort_Send_String>:
+}
+
+void SerialPort_Send_String(char * msg){ //msg -> "Hola como andan hoy?" 20 ASCII+findecadena, tardo=20ms
+ 38c:	ef 92       	push	r14
+ 38e:	ff 92       	push	r15
+ 390:	0f 93       	push	r16
+ 392:	1f 93       	push	r17
+ 394:	cf 93       	push	r28
+ 396:	7c 01       	movw	r14, r24
+	uint8_t i = 0;
+ 398:	c0 e0       	ldi	r28, 0x00	; 0
+	//'\0' = 0x00
+	while(msg[i]){ // *(msg+i)
+ 39a:	07 c0       	rjmp	.+14     	; 0x3aa <SerialPort_Send_String+0x1e>
+		SerialPort_Wait_For_TX_Buffer_Free(); //9600bps formato 8N1, 10bits, 10.Tbit=10/9600=1ms 
+ 39c:	0e 94 be 01 	call	0x37c	; 0x37c <SerialPort_Wait_For_TX_Buffer_Free>
+		SerialPort_Send_Data(msg[i]);
+ 3a0:	f8 01       	movw	r30, r16
+ 3a2:	80 81       	ld	r24, Z
+ 3a4:	0e 94 c3 01 	call	0x386	; 0x386 <SerialPort_Send_Data>
+		i++;
+ 3a8:	cf 5f       	subi	r28, 0xFF	; 255
+}
+
+void SerialPort_Send_String(char * msg){ //msg -> "Hola como andan hoy?" 20 ASCII+findecadena, tardo=20ms
+	uint8_t i = 0;
+	//'\0' = 0x00
+	while(msg[i]){ // *(msg+i)
+ 3aa:	87 01       	movw	r16, r14
+ 3ac:	0c 0f       	add	r16, r28
+ 3ae:	11 1d       	adc	r17, r1
+ 3b0:	f8 01       	movw	r30, r16
+ 3b2:	80 81       	ld	r24, Z
+ 3b4:	81 11       	cpse	r24, r1
+ 3b6:	f2 cf       	rjmp	.-28     	; 0x39c <SerialPort_Send_String+0x10>
+		SerialPort_Wait_For_TX_Buffer_Free(); //9600bps formato 8N1, 10bits, 10.Tbit=10/9600=1ms 
+		SerialPort_Send_Data(msg[i]);
+		i++;
+	}
+}
+ 3b8:	cf 91       	pop	r28
+ 3ba:	1f 91       	pop	r17
+ 3bc:	0f 91       	pop	r16
+ 3be:	ff 90       	pop	r15
+ 3c0:	ef 90       	pop	r14
+ 3c2:	08 95       	ret
+
+000003c4 <setupSerialPort>:
+/*
+*Configuración de la terminal serie
+*/
+void setupSerialPort(int cod){
+	SerialPort_Init(cod);
+ 3c4:	0e 94 a4 01 	call	0x348	; 0x348 <SerialPort_Init>
+	SerialPort_TX_Enable();
+ 3c8:	0e 94 ac 01 	call	0x358	; 0x358 <SerialPort_TX_Enable>
+	SerialPort_RX_Enable();
+ 3cc:	0e 94 b2 01 	call	0x364	; 0x364 <SerialPort_RX_Enable>
+	SerialPort_RX_Interrupt_Enable();
+ 3d0:	0e 94 b8 01 	call	0x370	; 0x370 <SerialPort_RX_Interrupt_Enable>
+ 3d4:	08 95       	ret
+
+000003d6 <__vector_18>:
+char BufferRX[32];
+char BufferTX[32];
+extern int RGB[3];
+
+
+ISR(USART_RX_vect){
+ 3d6:	1f 92       	push	r1
+ 3d8:	0f 92       	push	r0
+ 3da:	0f b6       	in	r0, 0x3f	; 63
+ 3dc:	0f 92       	push	r0
+ 3de:	11 24       	eor	r1, r1
+ 3e0:	2f 93       	push	r18
+ 3e2:	3f 93       	push	r19
+ 3e4:	8f 93       	push	r24
+ 3e6:	9f 93       	push	r25
+ 3e8:	ef 93       	push	r30
+ 3ea:	ff 93       	push	r31
+ 3ec:	cf 93       	push	r28
+ 3ee:	df 93       	push	r29
+ 3f0:	1f 92       	push	r1
+ 3f2:	cd b7       	in	r28, 0x3d	; 61
+ 3f4:	de b7       	in	r29, 0x3e	; 62
+	volatile char RX_Data = 0;
+ 3f6:	19 82       	std	Y+1, r1	; 0x01
+	static short int Index=0;
+	
+	RX_Data = UDR0;				//Obtengo la información del terminal
+ 3f8:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+ 3fc:	89 83       	std	Y+1, r24	; 0x01
+	if(RX_Data != '\r'){		//si no es un salto de linea entonces almaceno caracter en el buffer
+ 3fe:	89 81       	ldd	r24, Y+1	; 0x01
+ 400:	8d 30       	cpi	r24, 0x0D	; 13
+ 402:	89 f0       	breq	.+34     	; 0x426 <__EEPROM_REGION_LENGTH__+0x26>
+		BufferRX[Index++] = RX_Data;
+ 404:	80 91 ae 01 	lds	r24, 0x01AE	; 0x8001ae <Index.2157>
+ 408:	90 91 af 01 	lds	r25, 0x01AF	; 0x8001af <Index.2157+0x1>
+ 40c:	9c 01       	movw	r18, r24
+ 40e:	2f 5f       	subi	r18, 0xFF	; 255
+ 410:	3f 4f       	sbci	r19, 0xFF	; 255
+ 412:	30 93 af 01 	sts	0x01AF, r19	; 0x8001af <Index.2157+0x1>
+ 416:	20 93 ae 01 	sts	0x01AE, r18	; 0x8001ae <Index.2157>
+ 41a:	29 81       	ldd	r18, Y+1	; 0x01
+ 41c:	fc 01       	movw	r30, r24
+ 41e:	ef 52       	subi	r30, 0x2F	; 47
+ 420:	fe 4f       	sbci	r31, 0xFE	; 254
+ 422:	20 83       	st	Z, r18
+ 424:	11 c0       	rjmp	.+34     	; 0x448 <__EEPROM_REGION_LENGTH__+0x48>
+	}
+	else{						//Si es un salto de linea entonces
+		BufferRX[Index]='\0';	//Determino el final del string
+ 426:	e0 91 ae 01 	lds	r30, 0x01AE	; 0x8001ae <Index.2157>
+ 42a:	f0 91 af 01 	lds	r31, 0x01AF	; 0x8001af <Index.2157+0x1>
+ 42e:	ef 52       	subi	r30, 0x2F	; 47
+ 430:	fe 4f       	sbci	r31, 0xFE	; 254
+ 432:	10 82       	st	Z, r1
+		ProcesarInstruccion = true; //Activo flag para atención de instrucción
+ 434:	81 e0       	ldi	r24, 0x01	; 1
+ 436:	90 e0       	ldi	r25, 0x00	; 0
+ 438:	90 93 a9 01 	sts	0x01A9, r25	; 0x8001a9 <ProcesarInstruccion+0x1>
+ 43c:	80 93 a8 01 	sts	0x01A8, r24	; 0x8001a8 <ProcesarInstruccion>
+		Index=0;				//Vuelvo el indice al principio del vector
+ 440:	10 92 af 01 	sts	0x01AF, r1	; 0x8001af <Index.2157+0x1>
+ 444:	10 92 ae 01 	sts	0x01AE, r1	; 0x8001ae <Index.2157>
+	}
+}
+ 448:	0f 90       	pop	r0
+ 44a:	df 91       	pop	r29
+ 44c:	cf 91       	pop	r28
+ 44e:	ff 91       	pop	r31
+ 450:	ef 91       	pop	r30
+ 452:	9f 91       	pop	r25
+ 454:	8f 91       	pop	r24
+ 456:	3f 91       	pop	r19
+ 458:	2f 91       	pop	r18
+ 45a:	0f 90       	pop	r0
+ 45c:	0f be       	out	0x3f, r0	; 63
+ 45e:	0f 90       	pop	r0
+ 460:	1f 90       	pop	r1
+ 462:	18 95       	reti
+
+00000464 <iniciar_MEF>:
+void iniciar_MEF(){
+	estado=S0;
+ 464:	10 92 d0 01 	sts	0x01D0, r1	; 0x8001d0 <estado>
+	//PWM manual entre 7 y 248 anda joya (simulador)
+	pwm('R',0);
+ 468:	60 e0       	ldi	r22, 0x00	; 0
+ 46a:	70 e0       	ldi	r23, 0x00	; 0
+ 46c:	82 e5       	ldi	r24, 0x52	; 82
+ 46e:	90 e0       	ldi	r25, 0x00	; 0
+ 470:	0e 94 52 01 	call	0x2a4	; 0x2a4 <pwm>
+	pwm('G',0);
+ 474:	60 e0       	ldi	r22, 0x00	; 0
+ 476:	70 e0       	ldi	r23, 0x00	; 0
+ 478:	87 e4       	ldi	r24, 0x47	; 71
+ 47a:	90 e0       	ldi	r25, 0x00	; 0
+ 47c:	0e 94 52 01 	call	0x2a4	; 0x2a4 <pwm>
+	pwm('B',0);
+ 480:	60 e0       	ldi	r22, 0x00	; 0
+ 482:	70 e0       	ldi	r23, 0x00	; 0
+ 484:	82 e4       	ldi	r24, 0x42	; 66
+ 486:	90 e0       	ldi	r25, 0x00	; 0
+ 488:	0e 94 52 01 	call	0x2a4	; 0x2a4 <pwm>
+ 48c:	08 95       	ret
+
+0000048e <procesarEntrada>:
+			pwm('B',RGB[2]); //Actualizamos la señal de salida para el terminal Azul
+			estado=S0;		 //Volvemos a imprimir el mensaje para que el usuario ingrese un nuevo valor
+		break;
+	}
+}
+int procesarEntrada(int cont){
+ 48e:	0f 93       	push	r16
+ 490:	1f 93       	push	r17
+ 492:	cf 93       	push	r28
+ 494:	df 93       	push	r29
+ 496:	ec 01       	movw	r28, r24
+	int num = atoi((char *) BufferRX);	//Transforma string en int
+ 498:	81 ed       	ldi	r24, 0xD1	; 209
+ 49a:	91 e0       	ldi	r25, 0x01	; 1
+ 49c:	0e 94 28 03 	call	0x650	; 0x650 <atoi>
+ 4a0:	8c 01       	movw	r16, r24
+	SerialPort_Send_String(BufferRX);		//Eco del numero ingresado
+ 4a2:	81 ed       	ldi	r24, 0xD1	; 209
+ 4a4:	91 e0       	ldi	r25, 0x01	; 1
+ 4a6:	0e 94 c6 01 	call	0x38c	; 0x38c <SerialPort_Send_String>
+	SerialPort_Send_String("\n\r");			
+ 4aa:	88 e2       	ldi	r24, 0x28	; 40
+ 4ac:	91 e0       	ldi	r25, 0x01	; 1
+ 4ae:	0e 94 c6 01 	call	0x38c	; 0x38c <SerialPort_Send_String>
+	if (num>=0 && num <= 255){				//Verifica el rango valido
+ 4b2:	0f 3f       	cpi	r16, 0xFF	; 255
+ 4b4:	11 05       	cpc	r17, r1
+ 4b6:	09 f0       	breq	.+2      	; 0x4ba <procesarEntrada+0x2c>
+ 4b8:	48 f4       	brcc	.+18     	; 0x4cc <procesarEntrada+0x3e>
+		RGB[cont] = num;					//Actualiza el valor del led que corresponda
+ 4ba:	cc 0f       	add	r28, r28
+ 4bc:	dd 1f       	adc	r29, r29
+ 4be:	c0 50       	subi	r28, 0x00	; 0
+ 4c0:	df 4f       	sbci	r29, 0xFF	; 255
+ 4c2:	19 83       	std	Y+1, r17	; 0x01
+ 4c4:	08 83       	st	Y, r16
+		return true;
+ 4c6:	81 e0       	ldi	r24, 0x01	; 1
+ 4c8:	90 e0       	ldi	r25, 0x00	; 0
+ 4ca:	06 c0       	rjmp	.+12     	; 0x4d8 <procesarEntrada+0x4a>
+	}
+	else {						//En el caso de que no es ninguno de las opciones validas, devuelve 1
+		SerialPort_Send_String("El numero debe estar entre 0 y 255\n\r"); //Imprime mensaje de error al usuario
+ 4cc:	86 e0       	ldi	r24, 0x06	; 6
+ 4ce:	91 e0       	ldi	r25, 0x01	; 1
+ 4d0:	0e 94 c6 01 	call	0x38c	; 0x38c <SerialPort_Send_String>
+		return false;
+ 4d4:	80 e0       	ldi	r24, 0x00	; 0
+ 4d6:	90 e0       	ldi	r25, 0x00	; 0
+	}
+}
+ 4d8:	df 91       	pop	r29
+ 4da:	cf 91       	pop	r28
+ 4dc:	1f 91       	pop	r17
+ 4de:	0f 91       	pop	r16
+ 4e0:	08 95       	ret
+
+000004e2 <actualizar_MEF>:
+	pwm('R',0);
+	pwm('G',0);
+	pwm('B',0);
+}
+
+void actualizar_MEF(){
+ 4e2:	cf 93       	push	r28
+ 4e4:	df 93       	push	r29
+	switch (estado){
+ 4e6:	e0 91 d0 01 	lds	r30, 0x01D0	; 0x8001d0 <estado>
+ 4ea:	8e 2f       	mov	r24, r30
+ 4ec:	90 e0       	ldi	r25, 0x00	; 0
+ 4ee:	87 30       	cpi	r24, 0x07	; 7
+ 4f0:	91 05       	cpc	r25, r1
+ 4f2:	08 f0       	brcs	.+2      	; 0x4f6 <actualizar_MEF+0x14>
+ 4f4:	7c c0       	rjmp	.+248    	; 0x5ee <actualizar_MEF+0x10c>
+ 4f6:	fc 01       	movw	r30, r24
+ 4f8:	ec 5c       	subi	r30, 0xCC	; 204
+ 4fa:	ff 4f       	sbci	r31, 0xFF	; 255
+ 4fc:	0c 94 0e 03 	jmp	0x61c	; 0x61c <__tablejump2__>
+		case S0: 
+			SerialPort_Send_String("Ingrese un valor entre 0 y 255 para R:\n\r"); 
+ 500:	8b e2       	ldi	r24, 0x2B	; 43
+ 502:	91 e0       	ldi	r25, 0x01	; 1
+ 504:	0e 94 c6 01 	call	0x38c	; 0x38c <SerialPort_Send_String>
+			estado = S1;
+ 508:	81 e0       	ldi	r24, 0x01	; 1
+ 50a:	80 93 d0 01 	sts	0x01D0, r24	; 0x8001d0 <estado>
+		break;
+ 50e:	6f c0       	rjmp	.+222    	; 0x5ee <actualizar_MEF+0x10c>
+		case S1:
+		if(ProcesarInstruccion){	//Esperamos que el usuario ingrese un valor
+ 510:	80 91 a8 01 	lds	r24, 0x01A8	; 0x8001a8 <ProcesarInstruccion>
+ 514:	90 91 a9 01 	lds	r25, 0x01A9	; 0x8001a9 <ProcesarInstruccion+0x1>
+ 518:	89 2b       	or	r24, r25
+ 51a:	09 f4       	brne	.+2      	; 0x51e <actualizar_MEF+0x3c>
+ 51c:	68 c0       	rjmp	.+208    	; 0x5ee <actualizar_MEF+0x10c>
+			ProcesarInstruccion=0;  //Desactivamos el flag de nueva info
+ 51e:	10 92 a9 01 	sts	0x01A9, r1	; 0x8001a9 <ProcesarInstruccion+0x1>
+ 522:	10 92 a8 01 	sts	0x01A8, r1	; 0x8001a8 <ProcesarInstruccion>
+			if(procesarEntrada(0)){ //Vericamos que la entrada sea valida
+ 526:	80 e0       	ldi	r24, 0x00	; 0
+ 528:	90 e0       	ldi	r25, 0x00	; 0
+ 52a:	0e 94 47 02 	call	0x48e	; 0x48e <procesarEntrada>
+ 52e:	89 2b       	or	r24, r25
+ 530:	21 f0       	breq	.+8      	; 0x53a <actualizar_MEF+0x58>
+				estado=S2;			//Pasamos a imprimir el proximo mensaje
+ 532:	82 e0       	ldi	r24, 0x02	; 2
+ 534:	80 93 d0 01 	sts	0x01D0, r24	; 0x8001d0 <estado>
+ 538:	5a c0       	rjmp	.+180    	; 0x5ee <actualizar_MEF+0x10c>
+			}
+			else{
+				estado=S0;			//Volvemos a imprimir el mensaje anterior
+ 53a:	10 92 d0 01 	sts	0x01D0, r1	; 0x8001d0 <estado>
+ 53e:	57 c0       	rjmp	.+174    	; 0x5ee <actualizar_MEF+0x10c>
+			}
+		}
+		break;
+		case S2: 
+			SerialPort_Send_String("Ingrese un valor entre 0 y 255 para G:\n\r"); 
+ 540:	84 e5       	ldi	r24, 0x54	; 84
+ 542:	91 e0       	ldi	r25, 0x01	; 1
+ 544:	0e 94 c6 01 	call	0x38c	; 0x38c <SerialPort_Send_String>
+			estado=S3;
+ 548:	83 e0       	ldi	r24, 0x03	; 3
+ 54a:	80 93 d0 01 	sts	0x01D0, r24	; 0x8001d0 <estado>
+		break;
+ 54e:	4f c0       	rjmp	.+158    	; 0x5ee <actualizar_MEF+0x10c>
+		case S3:
+		if(ProcesarInstruccion){		//Esperamos que el usuario ingrese un valor
+ 550:	80 91 a8 01 	lds	r24, 0x01A8	; 0x8001a8 <ProcesarInstruccion>
+ 554:	90 91 a9 01 	lds	r25, 0x01A9	; 0x8001a9 <ProcesarInstruccion+0x1>
+ 558:	89 2b       	or	r24, r25
+ 55a:	09 f4       	brne	.+2      	; 0x55e <actualizar_MEF+0x7c>
+ 55c:	48 c0       	rjmp	.+144    	; 0x5ee <actualizar_MEF+0x10c>
+			ProcesarInstruccion=0;		//Desactivamos el flag de nueva info
+ 55e:	10 92 a9 01 	sts	0x01A9, r1	; 0x8001a9 <ProcesarInstruccion+0x1>
+ 562:	10 92 a8 01 	sts	0x01A8, r1	; 0x8001a8 <ProcesarInstruccion>
+			if(procesarEntrada(1)){		//Vericamos que la entrada sea valida
+ 566:	81 e0       	ldi	r24, 0x01	; 1
+ 568:	90 e0       	ldi	r25, 0x00	; 0
+ 56a:	0e 94 47 02 	call	0x48e	; 0x48e <procesarEntrada>
+ 56e:	89 2b       	or	r24, r25
+ 570:	21 f0       	breq	.+8      	; 0x57a <actualizar_MEF+0x98>
+				estado=S4;//Pasamos a imprimir el proximo mensaje
+ 572:	84 e0       	ldi	r24, 0x04	; 4
+ 574:	80 93 d0 01 	sts	0x01D0, r24	; 0x8001d0 <estado>
+ 578:	3a c0       	rjmp	.+116    	; 0x5ee <actualizar_MEF+0x10c>
+			}
+			else{
+				estado=S2;//Volvemos a imprimir el mensaje anterior
+ 57a:	82 e0       	ldi	r24, 0x02	; 2
+ 57c:	80 93 d0 01 	sts	0x01D0, r24	; 0x8001d0 <estado>
+ 580:	36 c0       	rjmp	.+108    	; 0x5ee <actualizar_MEF+0x10c>
+			}
+		}
+		break;
+		case S4: SerialPort_Send_String("Ingrese un valor entre 0 y 255 para B:\n\r"); estado=S5;
+ 582:	8d e7       	ldi	r24, 0x7D	; 125
+ 584:	91 e0       	ldi	r25, 0x01	; 1
+ 586:	0e 94 c6 01 	call	0x38c	; 0x38c <SerialPort_Send_String>
+ 58a:	85 e0       	ldi	r24, 0x05	; 5
+ 58c:	80 93 d0 01 	sts	0x01D0, r24	; 0x8001d0 <estado>
+		break;
+ 590:	2e c0       	rjmp	.+92     	; 0x5ee <actualizar_MEF+0x10c>
+		case S5:
+		if(ProcesarInstruccion){	//Esperamos que el usuario ingrese un valor
+ 592:	80 91 a8 01 	lds	r24, 0x01A8	; 0x8001a8 <ProcesarInstruccion>
+ 596:	90 91 a9 01 	lds	r25, 0x01A9	; 0x8001a9 <ProcesarInstruccion+0x1>
+ 59a:	89 2b       	or	r24, r25
+ 59c:	41 f1       	breq	.+80     	; 0x5ee <actualizar_MEF+0x10c>
+
+			ProcesarInstruccion=0;		//Desactivamos el flag de nueva info
+ 59e:	10 92 a9 01 	sts	0x01A9, r1	; 0x8001a9 <ProcesarInstruccion+0x1>
+ 5a2:	10 92 a8 01 	sts	0x01A8, r1	; 0x8001a8 <ProcesarInstruccion>
+			if(procesarEntrada(2)){		//Vericamos que la entrada sea valida
+ 5a6:	82 e0       	ldi	r24, 0x02	; 2
+ 5a8:	90 e0       	ldi	r25, 0x00	; 0
+ 5aa:	0e 94 47 02 	call	0x48e	; 0x48e <procesarEntrada>
+ 5ae:	89 2b       	or	r24, r25
+ 5b0:	21 f0       	breq	.+8      	; 0x5ba <actualizar_MEF+0xd8>
+				estado=S6;
+ 5b2:	86 e0       	ldi	r24, 0x06	; 6
+ 5b4:	80 93 d0 01 	sts	0x01D0, r24	; 0x8001d0 <estado>
+ 5b8:	1a c0       	rjmp	.+52     	; 0x5ee <actualizar_MEF+0x10c>
+			}
+			else{
+				estado=S4;			//Volvemos a imprimir el mensaje anterior
+ 5ba:	84 e0       	ldi	r24, 0x04	; 4
+ 5bc:	80 93 d0 01 	sts	0x01D0, r24	; 0x8001d0 <estado>
+ 5c0:	16 c0       	rjmp	.+44     	; 0x5ee <actualizar_MEF+0x10c>
+			}
+		}
+		break;
+		case S6:
+			pwm('R',RGB[0]); //Actualizamos la señal de salida para el terminal Rojo
+ 5c2:	c0 e0       	ldi	r28, 0x00	; 0
+ 5c4:	d1 e0       	ldi	r29, 0x01	; 1
+ 5c6:	68 81       	ld	r22, Y
+ 5c8:	79 81       	ldd	r23, Y+1	; 0x01
+ 5ca:	82 e5       	ldi	r24, 0x52	; 82
+ 5cc:	90 e0       	ldi	r25, 0x00	; 0
+ 5ce:	0e 94 52 01 	call	0x2a4	; 0x2a4 <pwm>
+			pwm('G',RGB[1]); //Actualizamos la señal de salida para el terminal Verde
+ 5d2:	6a 81       	ldd	r22, Y+2	; 0x02
+ 5d4:	7b 81       	ldd	r23, Y+3	; 0x03
+ 5d6:	87 e4       	ldi	r24, 0x47	; 71
+ 5d8:	90 e0       	ldi	r25, 0x00	; 0
+ 5da:	0e 94 52 01 	call	0x2a4	; 0x2a4 <pwm>
+			pwm('B',RGB[2]); //Actualizamos la señal de salida para el terminal Azul
+ 5de:	6c 81       	ldd	r22, Y+4	; 0x04
+ 5e0:	7d 81       	ldd	r23, Y+5	; 0x05
+ 5e2:	82 e4       	ldi	r24, 0x42	; 66
+ 5e4:	90 e0       	ldi	r25, 0x00	; 0
+ 5e6:	0e 94 52 01 	call	0x2a4	; 0x2a4 <pwm>
+			estado=S0;		 //Volvemos a imprimir el mensaje para que el usuario ingrese un nuevo valor
+ 5ea:	10 92 d0 01 	sts	0x01D0, r1	; 0x8001d0 <estado>
+		break;
+	}
+}
+ 5ee:	df 91       	pop	r29
+ 5f0:	cf 91       	pop	r28
+ 5f2:	08 95       	ret
+
+000005f4 <__divmodhi4>:
+ 5f4:	97 fb       	bst	r25, 7
+ 5f6:	07 2e       	mov	r0, r23
+ 5f8:	16 f4       	brtc	.+4      	; 0x5fe <__divmodhi4+0xa>
+ 5fa:	00 94       	com	r0
+ 5fc:	07 d0       	rcall	.+14     	; 0x60c <__divmodhi4_neg1>
+ 5fe:	77 fd       	sbrc	r23, 7
+ 600:	09 d0       	rcall	.+18     	; 0x614 <__divmodhi4_neg2>
+ 602:	0e 94 14 03 	call	0x628	; 0x628 <__udivmodhi4>
+ 606:	07 fc       	sbrc	r0, 7
+ 608:	05 d0       	rcall	.+10     	; 0x614 <__divmodhi4_neg2>
+ 60a:	3e f4       	brtc	.+14     	; 0x61a <__divmodhi4_exit>
+
+0000060c <__divmodhi4_neg1>:
+ 60c:	90 95       	com	r25
+ 60e:	81 95       	neg	r24
+ 610:	9f 4f       	sbci	r25, 0xFF	; 255
+ 612:	08 95       	ret
+
+00000614 <__divmodhi4_neg2>:
+ 614:	70 95       	com	r23
+ 616:	61 95       	neg	r22
+ 618:	7f 4f       	sbci	r23, 0xFF	; 255
+
+0000061a <__divmodhi4_exit>:
+ 61a:	08 95       	ret
+
+0000061c <__tablejump2__>:
+ 61c:	ee 0f       	add	r30, r30
+ 61e:	ff 1f       	adc	r31, r31
+ 620:	05 90       	lpm	r0, Z+
+ 622:	f4 91       	lpm	r31, Z
+ 624:	e0 2d       	mov	r30, r0
+ 626:	09 94       	ijmp
+
+00000628 <__udivmodhi4>:
+ 628:	aa 1b       	sub	r26, r26
+ 62a:	bb 1b       	sub	r27, r27
+ 62c:	51 e1       	ldi	r21, 0x11	; 17
+ 62e:	07 c0       	rjmp	.+14     	; 0x63e <__udivmodhi4_ep>
+
+00000630 <__udivmodhi4_loop>:
+ 630:	aa 1f       	adc	r26, r26
+ 632:	bb 1f       	adc	r27, r27
+ 634:	a6 17       	cp	r26, r22
+ 636:	b7 07       	cpc	r27, r23
+ 638:	10 f0       	brcs	.+4      	; 0x63e <__udivmodhi4_ep>
+ 63a:	a6 1b       	sub	r26, r22
+ 63c:	b7 0b       	sbc	r27, r23
+
+0000063e <__udivmodhi4_ep>:
+ 63e:	88 1f       	adc	r24, r24
+ 640:	99 1f       	adc	r25, r25
+ 642:	5a 95       	dec	r21
+ 644:	a9 f7       	brne	.-22     	; 0x630 <__udivmodhi4_loop>
+ 646:	80 95       	com	r24
+ 648:	90 95       	com	r25
+ 64a:	bc 01       	movw	r22, r24
+ 64c:	cd 01       	movw	r24, r26
+ 64e:	08 95       	ret
+
+00000650 <atoi>:
+ 650:	fc 01       	movw	r30, r24
+ 652:	88 27       	eor	r24, r24
+ 654:	99 27       	eor	r25, r25
+ 656:	e8 94       	clt
+ 658:	21 91       	ld	r18, Z+
+ 65a:	20 32       	cpi	r18, 0x20	; 32
+ 65c:	e9 f3       	breq	.-6      	; 0x658 <atoi+0x8>
+ 65e:	29 30       	cpi	r18, 0x09	; 9
+ 660:	10 f0       	brcs	.+4      	; 0x666 <atoi+0x16>
+ 662:	2e 30       	cpi	r18, 0x0E	; 14
+ 664:	c8 f3       	brcs	.-14     	; 0x658 <atoi+0x8>
+ 666:	2b 32       	cpi	r18, 0x2B	; 43
+ 668:	41 f0       	breq	.+16     	; 0x67a <atoi+0x2a>
+ 66a:	2d 32       	cpi	r18, 0x2D	; 45
+ 66c:	39 f4       	brne	.+14     	; 0x67c <atoi+0x2c>
+ 66e:	68 94       	set
+ 670:	04 c0       	rjmp	.+8      	; 0x67a <atoi+0x2a>
+ 672:	0e 94 46 03 	call	0x68c	; 0x68c <__mulhi_const_10>
+ 676:	82 0f       	add	r24, r18
+ 678:	91 1d       	adc	r25, r1
+ 67a:	21 91       	ld	r18, Z+
+ 67c:	20 53       	subi	r18, 0x30	; 48
+ 67e:	2a 30       	cpi	r18, 0x0A	; 10
+ 680:	c0 f3       	brcs	.-16     	; 0x672 <atoi+0x22>
+ 682:	1e f4       	brtc	.+6      	; 0x68a <atoi+0x3a>
+ 684:	90 95       	com	r25
+ 686:	81 95       	neg	r24
+ 688:	9f 4f       	sbci	r25, 0xFF	; 255
+ 68a:	08 95       	ret
+
+0000068c <__mulhi_const_10>:
+ 68c:	7a e0       	ldi	r23, 0x0A	; 10
+ 68e:	97 9f       	mul	r25, r23
+ 690:	90 2d       	mov	r25, r0
+ 692:	87 9f       	mul	r24, r23
+ 694:	80 2d       	mov	r24, r0
+ 696:	91 0d       	add	r25, r1
+ 698:	11 24       	eor	r1, r1
+ 69a:	08 95       	ret
+
+0000069c <_exit>:
+ 69c:	f8 94       	cli
+
+0000069e <__stop_program>:
+ 69e:	ff cf       	rjmp	.-2      	; 0x69e <__stop_program>

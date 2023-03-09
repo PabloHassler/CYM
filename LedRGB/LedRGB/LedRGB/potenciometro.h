@@ -1,0 +1,2 @@
+void setupADC();
+void intensidad();
